@@ -1,3 +1,4 @@
+{% load staticfiles %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -18,9 +19,9 @@
 
 		<script src="{% static 'inventory/js/modernizr.custom.js' %}"></script>
 	</head>
-	<body>
+	<body style="height:100%;overflow:hidden;">
 		<div class="containerDash">
-			<ul id="gn-menu" class="gn-menu-main">
+			<ul id="gn-menu" class="gn-menu-main" style="z-index:100;position:absolute;" >
 				<li class="gn-trigger">
 					<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
 					<nav class="gn-menu-wrapper">
@@ -49,7 +50,7 @@
 
 				<li><a class="codrops-icon codrops-icon-drop" href="#"><span>New Admin</span></a></li>
 			</ul>
-			<header>
+			<header style="margin-left:-190px;margin-top:-50px;">
 				<h1>Inventory Management for ICT and Electronics and Computer Department</h1>
 				<h2> Pulchowk Campus, Lalitpur </h2>
 

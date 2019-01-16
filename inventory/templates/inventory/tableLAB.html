@@ -1,3 +1,4 @@
+{% load staticfiles %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -21,9 +22,9 @@
         <script src="{% static 'inventory/vendor/ajax/libs/popper/1.14.6/umd/popper.min.js' %}"></script>
         <script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
 	</head>
-	<body>
+	<body style="height:100%;overflow:hidden;">
 		<div class="containerDash">
-			<ul id="gn-menu" class="gn-menu-main">
+			<ul id="gn-menu" class="gn-menu-main" style="z-index:100;position:absolute;">
 				<li class="gn-trigger">
 					<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
 					<nav class="gn-menu-wrapper">
@@ -52,13 +53,15 @@
 
 				<li><a class="codrops-icon codrops-icon-drop" href="#"><span>New Admin</span></a></li>
 			</ul>
-			<header>
+			<header  style="margin-left:-280px;">
 
-        <form class="example" action="action_page.php" style="margin-top:-100px;">
-  			<input type="text" placeholder="Search.." name="search" style="width:75%;">
-  			<button type="submit">Search</button>
-				</form>
-        <table class="table table-hover table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
+       <div style="position:relative;margin-top:-80px;">
+					<input class="form-control" type="text" placeholder="Search.." name="search" style="width:25%;" id="myInput" onkeyup="mySearchFunction()">
+					<img src = "{% static 'inventory/images/search.svg' %}" style="width:20px;height:20px;position:absolute;top:10px;left:290px;opacity:0.5">
+				</div>
+
+				<div style="overflow-y:scroll;height:700px;">
+        <table id="myTable" class="table table-hover table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
       <thead class="thead-dark">
         <tr>
           <th scope="col">#</th>
@@ -68,9 +71,12 @@
           <th scope="col">Test1</th>
           <th scope="col">Test2</th>
           <th scope="col">Test3</th>
+					<th scope="col">Edit</th>
+					<th scope="col">Delete</th>
+
         </tr>
       </thead>
-      <tbody>
+			<tbody>
         <tr>
           <th scope="row">1</th>
           <td>Mark</td>
@@ -79,6 +85,9 @@
           <td>apple</td>
           <td>ball</td>
           <td>cat</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+
         </tr>
         <tr>
           <th scope="row">2</th>
@@ -88,6 +97,8 @@
           <td>dog</td>
           <td>eagle</td>
           <td>fish</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
         </tr>
         <tr>
           <th scope="row">3</th>
@@ -97,7 +108,8 @@
           <td>giraffe</td>
           <td>hat</td>
           <td>ice</td>
-        </tr>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
         <tr>
           <th scope="row">4</th>
           <td>Larry</td>
@@ -106,6 +118,8 @@
           <td>giraffe</td>
           <td>hat</td>
           <td>ice</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
         </tr>
         <tr>
           <th scope="row">5</th>
@@ -115,6 +129,8 @@
           <td>giraffe</td>
           <td>hat</td>
           <td>ice</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
         </tr>
         <tr>
           <th scope="row">6</th>
@@ -124,6 +140,8 @@
           <td>giraffe</td>
           <td>hat</td>
           <td>ice</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
         </tr>
         <tr>
           <th scope="row">7</th>
@@ -133,6 +151,8 @@
           <td>giraffe</td>
           <td>hat</td>
           <td>ice</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
         </tr>
         <tr>
           <th scope="row">8</th>
@@ -142,6 +162,8 @@
           <td>giraffe</td>
           <td>hat</td>
           <td>ice</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
         </tr>
         <tr>
           <th scope="row">9</th>
@@ -151,6 +173,8 @@
           <td>giraffe</td>
           <td>hat</td>
           <td>ice</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
         </tr>
         <tr>
           <th scope="row">10</th>
@@ -160,9 +184,90 @@
           <td>giraffe</td>
           <td>hat</td>
           <td>ice</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
         </tr>
+				<tr>
+					<th scope="row">11</th>
+					<td>Larry</td>
+					<td>Jane</td>
+					<td>@twitter</td>
+					<td>giraffe</td>
+					<td>hat</td>
+					<td>ice</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+				</tr>
+				<tr>
+					<th scope="row">12</th>
+					<td>Larry</td>
+					<td>Jane</td>
+					<td>@twitter</td>
+					<td>giraffe</td>
+					<td>hat</td>
+					<td>ice</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+				</tr>
+				<tr>
+					<th scope="row">13</th>
+					<td>Larry</td>
+					<td>Jane</td>
+					<td>@twitter</td>
+					<td>giraffe</td>
+					<td>hat</td>
+					<td>ice</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+				</tr>
+				<tr>
+					<th scope="row">14</th>
+					<td>Larry</td>
+					<td>Jane</td>
+					<td>@twitter</td>
+					<td>giraffe</td>
+					<td>hat</td>
+					<td>ice</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+				</tr>
+				<tr>
+					<th scope="row">15</th>
+					<td>Larry</td>
+					<td>Jane</td>
+					<td>@twitter</td>
+					<td>giraffe</td>
+					<td>hat</td>
+					<td>ice</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+				</tr>
+				<tr>
+					<th scope="row">16</th>
+					<td>Larry</td>
+					<td>Jane</td>
+					<td>@twitter</td>
+					<td>giraffe</td>
+					<td>hat</td>
+					<td>ice</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+				</tr>
+				<tr>
+					<th scope="row">17</th>
+					<td>Larry</td>
+					<td>Jane</td>
+					<td>@twitter</td>
+					<td>giraffe</td>
+					<td>hat</td>
+					<td>ice</td>
+					<td> 	<a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+							<td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+				</tr>
       </tbody>
     </table>
+</div>
+
 
 
 
@@ -177,5 +282,30 @@
 		<script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
+		<script>
+		function mySearchFunction() {
+		  // Declare variables
+		  var input, filter, table, tr, td, i, txtValue;
+		  input = document.getElementById("myInput");
+		  filter = input.value.toUpperCase();
+		  table = document.getElementById("myTable");
+		  tr = table.getElementsByTagName("tr");
+
+		  // Loop through all table rows, and hide those who don't match the search query
+		  for (i = 0; i < tr.length; i++) {
+		    td = tr[i].getElementsByTagName("td")[0];
+		    if (td) {
+		      txtValue = td.textContent || td.innerText;
+		      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+		        tr[i].style.display = "";
+		      } else {
+		        tr[i].style.display = "none";
+		      }
+		    }
+		  }
+		}
+
+		</script>
+
 	</body>
 </html>
