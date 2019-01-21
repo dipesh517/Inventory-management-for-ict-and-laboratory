@@ -1,0 +1,351 @@
+{% load staticfiles %}
+{% load static %}
+{% load inventory_tags %}
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Lab Inventory Search</title>
+		<meta name="description" content="Manage your Lab Inventory with ease" />
+		<meta name="keywords" content="Inventory Management" />
+		<meta name="author" content="Codrops" />
+		<link rel="stylesheet" href="{% static 'inventory/vendor/bootstrap/css/bootstrap.min.css' %}" />
+		<link rel="shortcut icon" href="{% static 'inventory/images/favicon.ico' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'inventory/css/normalize.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'inventory/css/demo.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'inventory/css/component.css' %}" />
+
+
+		<script src="{% static 'inventory/js/modernizr.custom.js' %}"></script>
+		<script src="{% static 'inventory/vendor/jquery/jquery-3.3.1.slim.min.js' %}"></script>
+        <script src="{% static 'inventory/vendor/ajax/libs/popper/1.14.6/umd/popper.min.js' %}"></script>
+        <script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+	</head>
+	<body style="height:100%;overflow: hidden;background: #34495e;">
+		<div class="containerDash">
+			<ul id="gn-menu" class="gn-menu-main"  style="z-index:100;position:absolute;">
+				<li class="gn-trigger">
+					<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+					<nav class="gn-menu-wrapper">
+						<div class="gn-scroller">
+							<ul class="gn-menu">
+								<li><a class="gn-icon gn-icon-article" href="{% url 'index' %}">Dashboard</a></li>
+
+
+																<li>
+									<a class="gn-icon gn-icon-archive">Admin</a>
+																	</li>
+								<li class="gn-search-item">
+								<a class="gn-icon gn-icon-search" href="#">Search</a>
+								</li>
+<li>
+									<a class="gn-icon gn-icon-download">Log Out</a>
+
+								</li>
+							</ul>
+						</div><!-- /gn-scroller -->
+					</nav>
+				</li>
+				<li><img src="{% static 'inventory/images/tulogo.png' %}" class="tulogo" alt="tulogo"></li>
+				<li><a href="#">Lab Inventory Management</a></li>
+
+
+				<li><a class="codrops-icon codrops-icon-drop" href="#"><span>New Admin</span></a></li>
+			</ul>
+			<header style="margin-left:-300px;margin-top:-180px;">
+			<div class="row" style="margin-top:200px;margin-right:20px;">
+			<div class = "col-2" style="margin-top:-120px;padding:20px;">
+
+				<h2 style="color:white;font-size:13px;"> Floor </h2>
+				<div class="list-group" style="font-size:12px;width:70px;">
+					{% url 'testUrl' 500 500 as urlFloorAll %}
+	  <a href="{{urlFloorAll}}" {% if request.path == urlFloorAll %}class=" active list-group-item list-group-item-action number" {% endif %} class="list-group-item list-group-item-action number">
+	    All
+	  </a>
+		{% for obj in floorObj %}
+		{% url 'testUrl' obj.pk 500 as urlFloorSelect %}
+	 <a href="{{urlFloorSelect}}" {% if request.path == urlFloorSelect %} class="active list-group-item list-group-item-action number"{% endif %}class="list-group-item list-group-item-action number"><li>{{obj.floor}}</li></a>
+	 {% endfor %}
+
+	</div>
+<br>
+	<h2 style="color:white;font-size:13px;"> Room </h2>
+	<div class="list-group" style="font-size:12px;overflow-y:scroll;height:300px;width:70px;">
+	{% url 'testUrl' 500 500 as urlRoomAll%}
+	<a href="{{urlRoomAll}}" {% if request.path == urlRoomAll %}class=" active list-group-item list-group-item-action number" {% endif %} class="list-group-item list-group-item-action number">
+	All
+	</a>
+{% for obj in roomObj%}
+			{% url 'testUrl' 500 obj.pk as urlRoomSelect %}
+      <a href="{{urlRoomSelect}}" {% if request.path == urlRoomSelect %} class="active list-group-item list-group-item-action number"{% endif %}class="list-group-item list-group-item-action number"><li>{{obj.room_no}}</li></a>
+      {% endfor %}
+</div>
+
+			</div>
+			<div class="col-10">
+
+<!-- <div style="position:relative;margin-top:-80px;">
+			<input class="form-control" type="text" placeholder="Search.." name="search" style="width:25%;" id="myInput" onkeyup="mySearchFunction()">
+			<img src = "{% static 'inventory/images/search.svg' %}" style="width:20px;height:20px;position:absolute;top:10px;left:225px;opacity:0.5">
+		</div> -->
+		<div class="row">
+			<div class="col-3">
+				{% if objCount%}
+				<table class="table table-hover table-bordered" style="color:black;background-color:white;width:80px;height:550px;margin-top:-76px;margin-left:-100px;">
+      <thead class="thead-dark">
+        <tr class="table-primary">
+          <th scope="col">Equipments</th>
+          <th scope="col">Quantity</th>
+        </tr>
+      </thead>
+			<tbody>
+			<tr>
+				<td> <a  href="#" class="collapse1">{% equipment1_name%}</a></td>
+				<td> {{objCount.0}}</td>
+			</tr>
+			<tr>
+				<td> <a  href="#" class="collapse2">{% equipment2_name%}</a></td>
+				<td> {{objCount.1}}</td>
+			</tr>
+					<tr>
+				<td><a  href="#" class="collapse3"> {% equipment3_name%}</a></td>
+				<td> {{objCount.2}}</td>
+			</tr>
+				<tr>
+				<td> <a  href="#" class="collapse4"> {% equipment4_name%}</a></td>
+				<td> {{objCount.3}}</td>
+			</tr>
+				<tr>
+				<td> <a  href="#" class="collapse5">{% equipment5_name%}</a></td>
+				<td> {{objCount.4}}</td>
+
+			</tr>
+		</table>
+			{% endif %}
+
+	</div>
+
+<div class="col-9" style="margin-top:-120px;margin-left:-100px;">
+
+	<div class="collapse collapseExample1" style="overflow-y:scroll;height:700px;width:900px;">
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+		 <thead class="thead-dark">
+			 <tr>
+				 <th scope="col">Name</th>
+				 <th scope="col">Model</th>
+				 <th scope="col">Cost</th>
+				 <th scope="col">Date of Acquire</th>
+				 <th scope="col">Status</th>
+				 <th scope="col">Last Modified</th>
+				 <th scope="col">Edit</th>
+				 <th scope="col">Delete</th>
+			 </tr>
+		 </thead>
+		 <tbody>
+			 {% for obj in computerObj%}
+			 <tr>
+				 <td>{{obj.name}}</td>
+				 <td>{{obj.model}}</td>
+				 <td>{{obj.cost}}</td>
+				 <td>{{obj.date_of_acquire}}</td>
+				 <td>{{obj.status}}</td>
+				 <td>{{obj.last_modified}}</td>
+				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+			 </tr>
+			 {% endfor %}
+		 </tbody>
+	 </table>
+	</div>
+
+	<div class="collapse collapseExample2" style="overflow-y:scroll;height:700px;width:900px;">
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+		 <thead class="thead-dark">
+			 <tr>
+				 <th scope="col">Name</th>
+				 <th scope="col">Model</th>
+				 <th scope="col">Cost</th>
+				 <th scope="col">Date of Acquire</th>
+				 <th scope="col">Status</th>
+				 <th scope="col">Last Modified</th>
+				 <th scope="col">Edit</th>
+				 <th scope="col">Delete</th>
+			 </tr>
+		 </thead>
+		 <tbody>
+			 {% for obj in laptopObj%}
+			 <tr>
+				 <td>{{obj.name}}</td>
+				 <td>{{obj.model}}</td>
+				 <td>{{obj.cost}}</td>
+				 <td>{{obj.date_of_acquire}}</td>
+				 <td>{{obj.status}}</td>
+				 <td>{{obj.last_modified}}</td>
+				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+			 </tr>
+			 {% endfor %}
+		 </tbody>
+	 </table>
+	</div>
+
+	<div class="collapse collapseExample3" style="overflow-y:scroll;height:700px;width:900px;">
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+		 <thead class="thead-dark">
+			 <tr>
+				 <th scope="col">Name</th>
+				 <th scope="col">Model</th>
+				 <th scope="col">Cost</th>
+				 <th scope="col">Date of Acquire</th>
+				 <th scope="col">Status</th>
+				 <th scope="col">Ports</th>
+				 <th scope="col">SFP ports</th>
+				 <th scope="col">Last Modified</th>
+				 <th scope="col">Edit</th>
+				 <th scope="col">Delete</th>
+			 </tr>
+		 </thead>
+		 <tbody>
+			 {% for obj in networkObj%}
+			 <tr>
+				 <td>{{obj.name}}</td>
+				 <td>{{obj.model}}</td>
+				 <td>{{obj.cost}}</td>
+				 <td>{{obj.date_of_acquire}}</td>
+				 <td>{{obj.status}}</td>
+				 <td>{{obj.no_of_ports}}</td>
+				 <td>{{obj.no_of_SFP_ports}}</td>
+				 <td>{{obj.last_modified}}</td>
+				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+			 </tr>
+			 {% endfor %}
+		 </tbody>
+	 </table>
+	</div>
+
+	<div class="collapse collapseExample4" style="overflow-y:scroll;height:700px;width:900px;">
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+		 <thead class="thead-dark">
+			 <tr>
+				 <th scope="col">Name</th>
+				 <th scope="col">Model</th>
+				 <th scope="col">Cost</th>
+				 <th scope="col">Date of Acquire</th>
+				 <th scope="col">Status</th>
+				 	 <th scope="col">IP add.</th>
+					  <th scope="col">Last Modified</th>
+				 <th scope="col">Edit</th>
+				 <th scope="col">Delete</th>
+			 </tr>
+		 </thead>
+		 <tbody>
+			 {% for obj in printerObj%}
+			 <tr>
+				 <td>{{obj.name}}</td>
+				 <td>{{obj.model}}</td>
+				 <td>{{obj.cost}}</td>
+				 <td>{{obj.date_of_acquire}}</td>
+				 <td>{{obj.status}}</td>
+				 <td>{{obj.ip_address}}</td>
+				 <td>{{obj.last_modified}}</td>
+				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+			 </tr>
+			 {% endfor %}
+		 </tbody>
+	 </table>
+	</div>
+
+	<div class="collapse collapseExample5" style="overflow-y:scroll;height:700px;width:900px;">
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+		 <thead class="thead-dark">
+			 <tr>
+				 <th scope="col">Name</th>
+				 <th scope="col">Model</th>
+				 <th scope="col">Cost</th>
+				 <th scope="col">Date of Acquire</th>
+				 <th scope="col">Status</th>
+				 <th scope="col">Last Modified</th>
+				 <th scope="col">Edit</th>
+				 <th scope="col">Delete</th>
+			 </tr>
+		 </thead>
+		 <tbody>
+			 {% for obj in additionalObj%}
+			 <tr>
+				 <td>{{obj.name}}</td>
+				 <td>{{obj.model}}</td>
+				 <td>{{obj.cost}}</td>
+				 <td>{{obj.date_of_acquire}}</td>
+				 <td>{{obj.status}}</td>
+				 <td>{{obj.last_modified}}</td>
+				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+			 </tr>
+			 {% endfor %}
+		 </tbody>
+	 </table>
+	</div>
+
+
+</div>
+
+
+	</div>
+		</div>
+	</div>
+</header>
+	</div>
+		<!-- /container -->
+
+		<script src="{% static 'inventory/js/classie.js' %}"></script>
+		<script src="{% static 'inventory/js/gnmenu.js' %}"></script>
+		<script>
+			new gnMenu( document.getElementById( 'gn-menu' ) );
+		</script>
+
+		<script>
+		$(document).ready(function(){
+		  $(".collapse1").click(function(){
+				 $(".collapseExample2").collapse('hide');
+				  $(".collapseExample3").collapse('hide');
+					$(".collapseExample4").collapse('hide');
+					$(".collapseExample5").collapse('hide');
+		    $(".collapseExample1").collapse('toggle');
+		  });
+		  $(".collapse2").click(function(){
+				$(".collapseExample1").collapse('hide');
+ 				$(".collapseExample3").collapse('hide');
+				$(".collapseExample4").collapse('hide');
+				$(".collapseExample5").collapse('hide');
+ 			$(".collapseExample2").collapse('toggle');
+		  });
+		  $(".collapse3").click(function(){
+				$(".collapseExample1").collapse('hide');
+ 			 $(".collapseExample2").collapse('hide');
+			 $(".collapseExample4").collapse('hide');
+			 $(".collapseExample5").collapse('hide');
+ 		 $(".collapseExample3").collapse('toggle');
+		  });
+			$(".collapse4").click(function(){
+			 $(".collapseExample1").collapse('hide');
+				$(".collapseExample2").collapse('hide');
+			$(".collapseExample3").collapse('hide');
+			$(".collapseExample5").collapse('hide');
+			$(".collapseExample4").collapse('toggle');
+		 });
+		 $(".collapse5").click(function(){
+			 $(".collapseExample1").collapse('hide');
+			$(".collapseExample2").collapse('hide');
+			$(".collapseExample4").collapse('hide');
+			$(".collapseExample4").collapse('hide');
+		$(".collapseExample5").collapse('toggle');
+		 });
+		});
+		</script>
+
+	</body>
+</html>

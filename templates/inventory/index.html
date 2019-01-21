@@ -34,7 +34,7 @@
 									<a class="gn-icon gn-icon-archive" href="{% url 'admin:index' %}">Admin</a>
 																	</li>
 								<li class="gn-search-item">
-								<a class="gn-icon gn-icon-search">Search</a>
+								<a class="gn-icon gn-icon-search" href="{% url 'testUrl' 500 500 %}">Search</a>
 								</li>
 <li>
 									<a class="gn-icon gn-icon-download">Log Out</a>
@@ -101,6 +101,7 @@
 
 </div>
 </div>
+
 		</header>
 
 
@@ -115,5 +116,6 @@
 		<script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
+
 	</body>
 </html>

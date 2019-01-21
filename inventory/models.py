@@ -28,12 +28,19 @@ class Item(models.Model):
         return "{}-{}".format(self.name, self.model)
 
 
-class Room(models.Model):
-    room_no = models.CharField(max_length=20, primary_key=True, help_text='Enter the room number')
-    floor = models.PositiveSmallIntegerField(help_text='In which floor is this room?')
+class Floor(models.Model):
 
+    floor = models.PositiveSmallIntegerField(help_text='Enter the floor',primary_key=True)
     def __str__(self):
-        return self.room_no
+        return str(self.floor)
+
+
+class Room(models.Model):
+    room_no = models.PositiveSmallIntegerField(primary_key=True, help_text='Enter the room number')
+    floor = models.ForeignKey('Floor',help_text='In which floor is this room?',on_delete=models.CASCADE)
+    def __str__(self):
+        return str(self.room_no)
+
 
 
 class Computer(Item):
@@ -58,6 +65,3 @@ class Printer(Item):
 
 class AdditionalItem(Item):
     pass
-
-
-

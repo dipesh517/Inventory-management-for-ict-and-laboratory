@@ -5,6 +5,8 @@ from .models import Laptop
 from .models import NetworkSwitch
 from .models import Printer
 from .models import AdditionalItem
+from.models import Floor
+
 
 # Register your models here.
 
@@ -15,4 +17,4 @@ admin.site.register(Laptop)
 admin.site.register(NetworkSwitch)
 admin.site.register(Printer)
 admin.site.register(AdditionalItem)
-
+admin.site.register(Floor)
