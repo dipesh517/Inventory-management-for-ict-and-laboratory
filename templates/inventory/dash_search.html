@@ -35,7 +35,7 @@
 
 
 																<li>
-									<a class="gn-icon gn-icon-archive">Admin</a>
+									<a class="gn-icon gn-icon-archive" href="{% url 'admin:index' %}">Admin</a>
 																	</li>
 								<li class="gn-search-item">
 								<a class="gn-icon gn-icon-search" href="#">Search</a>
@@ -55,7 +55,8 @@
 				<li><a class="codrops-icon codrops-icon-drop" href="#"><span>New Admin</span></a></li>
 			</ul>
 			<header style="margin-left:-300px;margin-top:-180px;">
-			<div class="row" style="margin-top:200px;margin-right:20px;">
+				<span><h1 style="margin-top:80px;margin-left:500px;font-weight:bold;"> Out of order Products </h1></span>
+			<div class="row" style="margin-top:100px;margin-right:20px;">
             <div class = "col-2" style="margin-top:-120px;padding:20px;">
 
 				<h2 style="color:white;font-size:13px;"> Floor </h2>
@@ -91,7 +92,7 @@
 			<img src = "{% static 'inventory/images/search.svg' %}" style="width:20px;height:20px;position:absolute;top:10px;left:225px;opacity:0.5">
 		</div> -->
 		<div class="row">
-			<div class="col-3">
+			<div class="col-2">
 				{% if objCount%}
 				<table class="table table-hover table-bordered" style="color:black;background-color:white;width:80px;height:550px;margin-top:-76px;margin-left:-100px;">
                     <thead class="thead-dark">
@@ -128,10 +129,11 @@
 
 	    </div>
 
-<div class="col-9" style="margin-top:-120px;margin-left:-100px;">
+<div class="col-10" style="margin-top:-120px;overflow-y:scroll;height:600px;width:1500px;">
 
-	<div class="collapse collapseExample1" style="overflow-y:scroll;height:700px;width:900px;">
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+	<div class="collapse collapseExample1" style="overflow-y:scroll;height:700px;">
+		{% if computerObj.all %}
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -140,6 +142,8 @@
 				 <th scope="col">Date of Acquire</th>
 				 <th scope="col">Status</th>
 				 <th scope="col">Last Modified</th>
+				 <th scope="col">Floor</th>
+				<th scope="col">Room</th>
 				 <th scope="col">Edit</th>
 				 <th scope="col">Delete</th>
 			 </tr>
@@ -153,16 +157,24 @@
 				 <td>{{obj.date_of_acquire}}</td>
 				 <td>{{obj.status}}</td>
 				 <td>{{obj.last_modified}}</td>
+				 <td>{{obj.room.floor}}</td>
+				 <td>{{obj.room}}</td>
 				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
 				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>
 	 </table>
+	 {% else %}
+	 <div class="alert alert-danger" style="margin-top:50px;" role="alert">
+  There is no {% equipment1_name %}
+</div>
+	 {% endif %}
 	</div>
 
-	<div class="collapse collapseExample2" style="overflow-y:scroll;height:700px;width:900px;">
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+	<div class="collapse collapseExample2" style="overflow-y:scroll;height:700px;">
+		{% if laptopObj.all %}
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -171,6 +183,8 @@
 				 <th scope="col">Date of Acquire</th>
 				 <th scope="col">Status</th>
 				 <th scope="col">Last Modified</th>
+				 <th scope="col">Floor</th>
+				<th scope="col">Room</th>
 				 <th scope="col">Edit</th>
 				 <th scope="col">Delete</th>
 			 </tr>
@@ -184,16 +198,24 @@
 				 <td>{{obj.date_of_acquire}}</td>
 				 <td>{{obj.status}}</td>
 				 <td>{{obj.last_modified}}</td>
+				 <td>{{obj.room.floor}}</td>
+				 <td>{{obj.room}}</td>
 				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
 				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>
 	 </table>
+	 {% else %}
+	 <div class="alert alert-danger" style="margin-top:50px;" role="alert">
+  There is no {% equipment2_name %}
+</div>
+	 {% endif %}
 	</div>
 
-	<div class="collapse collapseExample3" style="overflow-y:scroll;height:700px;width:900px;">
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+	<div class="collapse collapseExample3" style="overflow-y:scroll;height:700px;">
+		{%if networkObj.all %}
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -204,6 +226,8 @@
 				 <th scope="col">Ports</th>
 				 <th scope="col">SFP ports</th>
 				 <th scope="col">Last Modified</th>
+				 <th scope="col">Floor</th>
+				<th scope="col">Room</th>
 				 <th scope="col">Edit</th>
 				 <th scope="col">Delete</th>
 			 </tr>
@@ -219,16 +243,24 @@
 				 <td>{{obj.no_of_ports}}</td>
 				 <td>{{obj.no_of_SFP_ports}}</td>
 				 <td>{{obj.last_modified}}</td>
+				 <td>{{obj.room.floor}}</td>
+				 <td>{{obj.room}}</td>
 				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
 				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>
 	 </table>
+	 {% else %}
+	 <div class="alert alert-danger" style="margin-top:50px;" role="alert">
+  There is no {% equipment3_name %}
+</div>
+	 {% endif %}
 	</div>
 
-	<div class="collapse collapseExample4" style="overflow-y:scroll;height:700px;width:900px;">
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+	<div class="collapse collapseExample4" style="overflow-y:scroll;height:700px;">
+		{% if printerObj.all %}
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -238,6 +270,8 @@
 				 <th scope="col">Status</th>
 				 	 <th scope="col">IP add.</th>
 					  <th scope="col">Last Modified</th>
+						<th scope="col">Floor</th>
+					 <th scope="col">Room</th>
 				 <th scope="col">Edit</th>
 				 <th scope="col">Delete</th>
 			 </tr>
@@ -252,16 +286,25 @@
 				 <td>{{obj.status}}</td>
 				 <td>{{obj.ip_address}}</td>
 				 <td>{{obj.last_modified}}</td>
+				 <td>{{obj.room.floor}}</td>
+				 <td>{{obj.room}}</td>
 				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
 				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>
 	 </table>
+	 {% else %}
+	 <div class="alert alert-danger" style="margin-top:50px;" role="alert">
+  There is no {% equipment4_name %}
+</div>
+	 {% endif %}
 	</div>
 
-	<div class="collapse collapseExample5" style="overflow-y:scroll;height:700px;width:900px;">
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+
+	<div class="collapse collapseExample5" style="overflow-y:scroll;height:700px;">
+		{% if additionalObj.all %}
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -270,6 +313,8 @@
 				 <th scope="col">Date of Acquire</th>
 				 <th scope="col">Status</th>
 				 <th scope="col">Last Modified</th>
+				 <th scope="col">Floor</th>
+				<th scope="col">Room</th>
 				 <th scope="col">Edit</th>
 				 <th scope="col">Delete</th>
 			 </tr>
@@ -283,14 +328,25 @@
 				 <td>{{obj.date_of_acquire}}</td>
 				 <td>{{obj.status}}</td>
 				 <td>{{obj.last_modified}}</td>
+				 <td>{{obj.room.floor}}</td>
+				 <td>{{obj.room}}</td>
 				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
 				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>
 	 </table>
+	 {% else %}
+	 <div class="alert alert-danger" style="margin-top:50px;" role="alert">
+  There is no {% equipment5_name %}
+</div>
+	 {% endif %}
 	</div>
-
+	<div class="collapse collapseEmpty">
+		<div class="alert alert-primary" style="margin-top:50px;" role="alert">
+	 Click on any equipment for additional detail from the table
+	</div>
+		</div>
 
 </div>
 
@@ -309,43 +365,49 @@
 		</script>
 
 		<script>
-		$(document).ready(function(){
-		  $(".collapse1").click(function(){
-				 $(".collapseExample2").collapse('hide');
-				  $(".collapseExample3").collapse('hide');
+			$(document).ready(function(){
+				 $(".collapseEmpty").collapse('show');
+				$(".collapse1").click(function(){
+					 $(".collapseExample2").collapse('hide');
+						$(".collapseExample3").collapse('hide');
+						$(".collapseExample4").collapse('hide');
+						$(".collapseExample5").collapse('hide');
+							$(".collapseEmpty").collapse('hide');
+					$(".collapseExample1").collapse('toggle');
+				});
+				$(".collapse2").click(function(){
+					$(".collapseExample1").collapse('hide');
+					$(".collapseExample3").collapse('hide');
 					$(".collapseExample4").collapse('hide');
 					$(".collapseExample5").collapse('hide');
-		    $(".collapseExample1").collapse('toggle');
-		  });
-		  $(".collapse2").click(function(){
-				$(".collapseExample1").collapse('hide');
- 				$(".collapseExample3").collapse('hide');
-				$(".collapseExample4").collapse('hide');
+						$(".collapseEmpty").collapse('hide');
+				$(".collapseExample2").collapse('toggle');
+				});
+				$(".collapse3").click(function(){
+					$(".collapseExample1").collapse('hide');
+				 $(".collapseExample2").collapse('hide');
+				 $(".collapseExample4").collapse('hide');
+				 $(".collapseExample5").collapse('hide');
+					$(".collapseEmpty").collapse('hide');
+			 $(".collapseExample3").collapse('toggle');
+				});
+				$(".collapse4").click(function(){
+				 $(".collapseExample1").collapse('hide');
+					$(".collapseExample2").collapse('hide');
+				$(".collapseExample3").collapse('hide');
 				$(".collapseExample5").collapse('hide');
- 			$(".collapseExample2").collapse('toggle');
-		  });
-		  $(".collapse3").click(function(){
-				$(".collapseExample1").collapse('hide');
- 			 $(".collapseExample2").collapse('hide');
-			 $(".collapseExample4").collapse('hide');
-			 $(".collapseExample5").collapse('hide');
- 		 $(".collapseExample3").collapse('toggle');
-		  });
-			$(".collapse4").click(function(){
-			 $(".collapseExample1").collapse('hide');
+					$(".collapseEmpty").collapse('hide');
+				$(".collapseExample4").collapse('toggle');
+			 });
+			 $(".collapse5").click(function(){
+				 $(".collapseExample1").collapse('hide');
 				$(".collapseExample2").collapse('hide');
-			$(".collapseExample3").collapse('hide');
-			$(".collapseExample5").collapse('hide');
-			$(".collapseExample4").collapse('toggle');
-		 });
-		 $(".collapse5").click(function(){
-			 $(".collapseExample1").collapse('hide');
-			$(".collapseExample2").collapse('hide');
-			$(".collapseExample4").collapse('hide');
-			$(".collapseExample4").collapse('hide');
-		$(".collapseExample5").collapse('toggle');
-		 });
-		});
+				$(".collapseExample3").collapse('hide');
+				$(".collapseExample4").collapse('hide');
+					$(".collapseEmpty").collapse('hide');
+			$(".collapseExample5").collapse('toggle');
+			 });
+			});
 		</script>
 
 	</body>

@@ -35,7 +35,7 @@
 
 
 																<li>
-									<a class="gn-icon gn-icon-archive">Admin</a>
+									<a class="gn-icon gn-icon-archive" href="{% url 'admin:index' %}">Admin</a>
 																	</li>
 								<li class="gn-search-item">
 								<a class="gn-icon gn-icon-search" href="#">Search</a>
@@ -55,13 +55,15 @@
 				<li><a class="codrops-icon codrops-icon-drop" href="#"><span>New Admin</span></a></li>
 			</ul>
 			<header style="margin-left:-300px;margin-top:-180px;">
-			<div class="row" style="margin-top:200px;margin-right:20px;">
+			<span><h1 style="margin-top:80px;margin-left:500px;font-weight:bold;"> All Products </h1></span>
+			<div class="row" style="margin-top:100px;margin-right:20px;">
+
 			<div class = "col-2" style="margin-top:-120px;padding:20px;">
 
 				<h2 style="color:white;font-size:13px;"> Floor </h2>
 				<div class="list-group" style="font-size:12px;width:70px;">
 					{% url 'testUrl' 500 500 as urlFloorAll %}
-	  <a href="{{urlFloorAll}}" {% if request.path == urlFloorAll %} class=" active list-group-item list-group-item-action number" {% endif %} class="list-group-item list-group-item-action number">
+	  <a href="{{urlFloorAll}}" {% if request.path == urlFloorAll %}class=" active list-group-item list-group-item-action number" {% endif %} class="list-group-item list-group-item-action number">
 	    All
 	  </a>
 		{% for obj in floorObj %}
@@ -72,7 +74,7 @@
 	</div>
 <br>
 	<h2 style="color:white;font-size:13px;"> Room </h2>
-	<div class="list-group" style="font-size:12px;overflow-y:scroll;height:300px;width:70px;">
+	<div class="list-group" style="font-size:12px;overflow-y:scroll;height:270px;width:70px;">
 	{% url 'testUrl' 500 500 as urlRoomAll%}
 	<a href="{{urlRoomAll}}" {% if request.path == urlRoomAll %}class=" active list-group-item list-group-item-action number" {% endif %} class="list-group-item list-group-item-action number">
 	All
@@ -91,7 +93,7 @@
 			<img src = "{% static 'inventory/images/search.svg' %}" style="width:20px;height:20px;position:absolute;top:10px;left:225px;opacity:0.5">
 		</div> -->
 		<div class="row">
-			<div class="col-3">
+			<div class="col-2">
 				{% if objCount%}
 				<table class="table table-hover table-bordered" style="color:black;background-color:white;width:80px;height:550px;margin-top:-76px;margin-left:-100px;">
       <thead class="thead-dark">
@@ -100,25 +102,25 @@
           <th scope="col">Quantity</th>
         </tr>
       </thead>
-			<tbody>
+			<tbody id="myQuantityDiv">
 			<tr>
-				<td> <a  href="#" class="collapse1">{% equipment1_name%}</a></td>
+				<td> <a  href="#" class="collapse1" id="equipmentList">{% equipment1_name%}</a></td>
 				<td> {{objCount.0}}</td>
 			</tr>
 			<tr>
-				<td> <a  href="#" class="collapse2">{% equipment2_name%}</a></td>
+				<td> <a  href="#" class="collapse2" id="equipmentList">{% equipment2_name%}</a></td>
 				<td> {{objCount.1}}</td>
 			</tr>
 					<tr>
-				<td><a  href="#" class="collapse3"> {% equipment3_name%}</a></td>
+				<td><a  href="#" class="collapse3" id="equipmentList"> {% equipment3_name%}</a></td>
 				<td> {{objCount.2}}</td>
 			</tr>
 				<tr>
-				<td> <a  href="#" class="collapse4"> {% equipment4_name%}</a></td>
+				<td> <a  href="#" class="collapse4" id="equipmentList"> {% equipment4_name%}</a></td>
 				<td> {{objCount.3}}</td>
 			</tr>
 				<tr>
-				<td> <a  href="#" class="collapse5">{% equipment5_name%}</a></td>
+				<td> <a  href="#" class="collapse5" id="equipmentList">{% equipment5_name%}</a></td>
 				<td> {{objCount.4}}</td>
 
 			</tr>
@@ -127,10 +129,11 @@
 
 	</div>
 
-<div class="col-9" style="margin-top:-120px;margin-left:-100px;">
+<div class="col-10" style="margin-top:-120px;overflow-y:scroll;height:600px;width:1900px;">
 
-	<div class="collapse collapseExample1" style="overflow-y:scroll;height:700px;width:900px;">
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+	<div class="collapse collapseExample1">
+		{% if computerObj.all %}
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -139,6 +142,8 @@
 				 <th scope="col">Date of Acquire</th>
 				 <th scope="col">Status</th>
 				 <th scope="col">Last Modified</th>
+				 <th scope="col">Floor</th>
+				<th scope="col">Room</th>
 				 <th scope="col">Edit</th>
 				 <th scope="col">Delete</th>
 			 </tr>
@@ -152,16 +157,22 @@
 				 <td>{{obj.date_of_acquire}}</td>
 				 <td>{{obj.status}}</td>
 				 <td>{{obj.last_modified}}</td>
+				 <td>{{obj.room.floor}}</td>
+				 <td>{{obj.room}}</td>
 				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
 				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>
 	 </table>
+	 {% else %}
+	 <h1> There is no  any {% equipment1_name% } </h1>
+	 {% endif %}
 	</div>
 
-	<div class="collapse collapseExample2" style="overflow-y:scroll;height:700px;width:900px;">
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+	<div class="collapse collapseExample2" >
+		{% if laptopObj.all %}
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -170,6 +181,8 @@
 				 <th scope="col">Date of Acquire</th>
 				 <th scope="col">Status</th>
 				 <th scope="col">Last Modified</th>
+				 <th scope="col">Floor</th>
+				<th scope="col">Room</th>
 				 <th scope="col">Edit</th>
 				 <th scope="col">Delete</th>
 			 </tr>
@@ -183,16 +196,27 @@
 				 <td>{{obj.date_of_acquire}}</td>
 				 <td>{{obj.status}}</td>
 				 <td>{{obj.last_modified}}</td>
+				 <td>{{obj.room.floor}}</td>
+				 <td>{{obj.room}}</td>
 				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
 				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>
 	 </table>
+	 {% else %}
+	 <div class="alert alert-danger" style="margin-top:50px;" role="alert">
+  There is no {% equipment2_name %}
+</div>
+	 {% endif %}
+
+
+
 	</div>
 
-	<div class="collapse collapseExample3" style="overflow-y:scroll;height:700px;width:900px;">
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+	<div class="collapse collapseExample3">
+		{% if printerObj.all %}
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -203,6 +227,8 @@
 				 <th scope="col">Ports</th>
 				 <th scope="col">SFP ports</th>
 				 <th scope="col">Last Modified</th>
+				 <th scope="col">Floor</th>
+				<th scope="col">Room</th>
 				 <th scope="col">Edit</th>
 				 <th scope="col">Delete</th>
 			 </tr>
@@ -218,16 +244,24 @@
 				 <td>{{obj.no_of_ports}}</td>
 				 <td>{{obj.no_of_SFP_ports}}</td>
 				 <td>{{obj.last_modified}}</td>
+				 <td>{{obj.room.floor}}</td>
+				 <td>{{obj.room}}</td>
 				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
 				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>
 	 </table>
+	 {% else %}
+	 <div class="alert alert-danger" style="margin-top:50px;" role="alert">
+  There is no {% equipment3_name %}
+</div>
+	 {% endif %}
 	</div>
 
-	<div class="collapse collapseExample4" style="overflow-y:scroll;height:700px;width:900px;">
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+	<div class="collapse collapseExample4">
+		{% if printerObj.all %}
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -237,6 +271,8 @@
 				 <th scope="col">Status</th>
 				 	 <th scope="col">IP add.</th>
 					  <th scope="col">Last Modified</th>
+						<th scope="col">Floor</th>
+					 <th scope="col">Room</th>
 				 <th scope="col">Edit</th>
 				 <th scope="col">Delete</th>
 			 </tr>
@@ -251,16 +287,24 @@
 				 <td>{{obj.status}}</td>
 				 <td>{{obj.ip_address}}</td>
 				 <td>{{obj.last_modified}}</td>
+				 <td>{{obj.room.floor}}</td>
+				 <td>{{obj.room}}</td>
 				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
 				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>
+		 {% else %}
+		 <div class="alert alert-danger" style="margin-top:50px;" role="alert">
+	  There is no {% equipment4_name %}
+	</div>
+		 {% endif %}
 	 </table>
 	</div>
 
-	<div class="collapse collapseExample5" style="overflow-y:scroll;height:700px;width:900px;">
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;width:900px;">
+	<div class="collapse collapseExample5" >
+		{% if additionalObj.all %}
+	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -269,6 +313,9 @@
 				 <th scope="col">Date of Acquire</th>
 				 <th scope="col">Status</th>
 				 <th scope="col">Last Modified</th>
+				  <th scope="col">Floor</th>
+				 <th scope="col">Room</th>
+
 				 <th scope="col">Edit</th>
 				 <th scope="col">Delete</th>
 			 </tr>
@@ -282,14 +329,25 @@
 				 <td>{{obj.date_of_acquire}}</td>
 				 <td>{{obj.status}}</td>
 				 <td>{{obj.last_modified}}</td>
+				 <td>{{obj.room.floor}}</td>
+				 <td>{{obj.room}}</td>
 				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
 				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>
 	 </table>
+	 {% else %}
+	 <div class="alert alert-danger" style="margin-top:50px;" role="alert">
+  There is no {% equipment5_name %}
+</div>
+	 {% endif %}
 	</div>
-
+	<div class="collapse collapseEmpty">
+		<div class="alert alert-primary" style="margin-top:50px;" role="alert">
+   Click on any equipment for additional detail from the table
+ </div>
+		</div>
 
 </div>
 
@@ -309,18 +367,23 @@
 
 		<script>
 		$(document).ready(function(){
+
+			 $(".collapseEmpty").collapse('show');
 		  $(".collapse1").click(function(){
 				 $(".collapseExample2").collapse('hide');
 				  $(".collapseExample3").collapse('hide');
 					$(".collapseExample4").collapse('hide');
 					$(".collapseExample5").collapse('hide');
+						$(".collapseEmpty").collapse('hide');
 		    $(".collapseExample1").collapse('toggle');
+
 		  });
 		  $(".collapse2").click(function(){
 				$(".collapseExample1").collapse('hide');
  				$(".collapseExample3").collapse('hide');
 				$(".collapseExample4").collapse('hide');
 				$(".collapseExample5").collapse('hide');
+					$(".collapseEmpty").collapse('hide');
  			$(".collapseExample2").collapse('toggle');
 		  });
 		  $(".collapse3").click(function(){
@@ -328,6 +391,7 @@
  			 $(".collapseExample2").collapse('hide');
 			 $(".collapseExample4").collapse('hide');
 			 $(".collapseExample5").collapse('hide');
+			 	$(".collapseEmpty").collapse('hide');
  		 $(".collapseExample3").collapse('toggle');
 		  });
 			$(".collapse4").click(function(){
@@ -335,17 +399,19 @@
 				$(".collapseExample2").collapse('hide');
 			$(".collapseExample3").collapse('hide');
 			$(".collapseExample5").collapse('hide');
+				$(".collapseEmpty").collapse('hide');
 			$(".collapseExample4").collapse('toggle');
 		 });
 		 $(".collapse5").click(function(){
 			 $(".collapseExample1").collapse('hide');
 			$(".collapseExample2").collapse('hide');
+			$(".collapseExample3").collapse('hide');
 			$(".collapseExample4").collapse('hide');
-			$(".collapseExample4").collapse('hide');
+				$(".collapseEmpty").collapse('hide');
 		$(".collapseExample5").collapse('toggle');
 		 });
 		});
-		</script>
 
+	</script>
 	</body>
 </html>
