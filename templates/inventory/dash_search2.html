@@ -56,32 +56,32 @@
 			</ul>
 			<header style="margin-left:-300px;margin-top:-180px;">
 			<div class="row" style="margin-top:200px;margin-right:20px;">
-			<div class = "col-2" style="margin-top:-120px;padding:20px;">
+            <div class = "col-2" style="margin-top:-120px;padding:20px;">
 
 				<h2 style="color:white;font-size:13px;"> Floor </h2>
 				<div class="list-group" style="font-size:12px;width:70px;">
-					{% url 'testUrl' 500 500 as urlFloorAll %}
-	  <a href="{{urlFloorAll}}" {% if request.path == urlFloorAll %} class=" active list-group-item list-group-item-action number" {% endif %} class="list-group-item list-group-item-action number">
-	    All
-	  </a>
-		{% for obj in floorObj %}
-		{% url 'testUrl' obj.pk 500 as urlFloorSelect %}
-	 <a href="{{urlFloorSelect}}" {% if request.path == urlFloorSelect %} class="active list-group-item list-group-item-action number"{% endif %}class="list-group-item list-group-item-action number"><li>{{obj.floor}}</li></a>
-	 {% endfor %}
+					{% url 'dashsearch2Url' 500 500 as urlFloorAll %}
+                      <a href="{{urlFloorAll}}" {% if request.path == urlFloorAll %} class=" active list-group-item list-group-item-action number" {% endif %} class="list-group-item list-group-item-action number">
+                        All
+                      </a>
+                        {% for obj in floorObj %}
+                        {% url 'dashsearch2Url' obj.pk 500 as urlFloorSelect %}
+                     <a href="{{urlFloorSelect}}" {% if request.path == urlFloorSelect %} class="active list-group-item list-group-item-action number"{% endif %}class="list-group-item list-group-item-action number"><li>{{obj.floor}}</li></a>
+                     {% endfor %}
 
-	</div>
-<br>
-	<h2 style="color:white;font-size:13px;"> Room </h2>
-	<div class="list-group" style="font-size:12px;overflow-y:scroll;height:300px;width:70px;">
-	{% url 'testUrl' 500 500 as urlRoomAll%}
-	<a href="{{urlRoomAll}}" {% if request.path == urlRoomAll %}class=" active list-group-item list-group-item-action number" {% endif %} class="list-group-item list-group-item-action number">
-	All
-	</a>
-{% for obj in roomObj%}
-			{% url 'testUrl' 500 obj.pk as urlRoomSelect %}
-      <a href="{{urlRoomSelect}}" {% if request.path == urlRoomSelect %} class="active list-group-item list-group-item-action number"{% endif %}class="list-group-item list-group-item-action number"><li>{{obj.room_no}}</li></a>
-      {% endfor %}
-</div>
+                    </div>
+                <br>
+                    <h2 style="color:white;font-size:13px;"> Room </h2>
+                    <div class="list-group" style="font-size:12px;overflow-y:scroll;height:300px;width:70px;">
+                    {% url 'dashsearch2Url' 500 500 as urlRoomAll%}
+                    <a href="{{urlRoomAll}}" {% if request.path == urlRoomAll %}class=" active list-group-item list-group-item-action number" {% endif %} class="list-group-item list-group-item-action number">
+                    All
+                    </a>
+                {% for obj in roomObj%}
+                            {% url 'dashsearch2Url' 500 obj.pk as urlRoomSelect %}
+                      <a href="{{urlRoomSelect}}" {% if request.path == urlRoomSelect %} class="active list-group-item list-group-item-action number"{% endif %}class="list-group-item list-group-item-action number"><li>{{obj.room_no}}</li></a>
+                      {% endfor %}
+                </div>
 
 			</div>
 			<div class="col-10">
@@ -94,38 +94,39 @@
 			<div class="col-3">
 				{% if objCount%}
 				<table class="table table-hover table-bordered" style="color:black;background-color:white;width:80px;height:550px;margin-top:-76px;margin-left:-100px;">
-      <thead class="thead-dark">
-        <tr class="table-primary">
-          <th scope="col">Equipments</th>
-          <th scope="col">Quantity</th>
-        </tr>
-      </thead>
-			<tbody>
-			<tr>
-				<td> <a  href="#" class="collapse1">{% equipment1_name%}</a></td>
-				<td> {{objCount.0}}</td>
-			</tr>
-			<tr>
-				<td> <a  href="#" class="collapse2">{% equipment2_name%}</a></td>
-				<td> {{objCount.1}}</td>
-			</tr>
-					<tr>
-				<td><a  href="#" class="collapse3"> {% equipment3_name%}</a></td>
-				<td> {{objCount.2}}</td>
-			</tr>
-				<tr>
-				<td> <a  href="#" class="collapse4"> {% equipment4_name%}</a></td>
-				<td> {{objCount.3}}</td>
-			</tr>
-				<tr>
-				<td> <a  href="#" class="collapse5">{% equipment5_name%}</a></td>
-				<td> {{objCount.4}}</td>
+                    <thead class="thead-dark">
+                        <tr class="table-primary">
+                            <th scope="col">Equipments</th>
+                            <th scope="col">Quantity</th>
+                        </tr>
+                    </thead>
+			         <tbody>
+                        <tr>
+                            <td> <a  href="#" class="collapse1">{% equipment1_name%}</a></td>
+                            <td> {{objCount.0}}</td>
+                        </tr>
+                        <tr>
+                            <td> <a  href="#" class="collapse2">{% equipment2_name%}</a></td>
+                            <td> {{objCount.1}}</td>
+                        </tr>
+                        <tr>
+                            <td><a  href="#" class="collapse3"> {% equipment3_name%}</a></td>
+                            <td> {{objCount.2}}</td>
+                        </tr>
+                        <tr>
+                            <td> <a  href="#" class="collapse4"> {% equipment4_name%}</a></td>
+                            <td> {{objCount.3}}</td>
+                        </tr>
+                        <tr>
+                            <td> <a  href="#" class="collapse5">{% equipment5_name%}</a></td>
+                            <td> {{objCount.4}}</td>
 
-			</tr>
-		</table>
+                        </tr>
+                     </tbody>
+                </table>
 			{% endif %}
 
-	</div>
+	    </div>
 
 <div class="col-9" style="margin-top:-120px;margin-left:-100px;">
 

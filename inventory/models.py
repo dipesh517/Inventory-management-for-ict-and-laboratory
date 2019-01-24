@@ -30,17 +30,18 @@ class Item(models.Model):
 
 class Floor(models.Model):
 
-    floor = models.PositiveSmallIntegerField(help_text='Enter the floor',primary_key=True)
+    floor = models.PositiveSmallIntegerField(help_text='Enter the floor', primary_key=True)
+
     def __str__(self):
         return str(self.floor)
 
 
 class Room(models.Model):
     room_no = models.PositiveSmallIntegerField(primary_key=True, help_text='Enter the room number')
-    floor = models.ForeignKey('Floor',help_text='In which floor is this room?',on_delete=models.CASCADE)
+    floor = models.ForeignKey('Floor',help_text='In which floor is this room?', on_delete=models.CASCADE)
+
     def __str__(self):
         return str(self.room_no)
-
 
 
 class Computer(Item):
