@@ -135,5 +135,3 @@ def dashSearch2View(request, floorNo, roomNo):
     objCount = [computerObj.count(), laptopObj.count(), networkObj.count(), printerObj.count(), additionalObj.count()]
     context = {'roomObj': roomObj, 'floorObj': floorObj, 'computerObj': computerObj, 'laptopObj': laptopObj, 'networkObj': networkObj, 'printerObj': printerObj, 'additionalObj': additionalObj, 'objCount': objCount}
     return render(request, 'inventory/dash_search2.html', context)
-
-

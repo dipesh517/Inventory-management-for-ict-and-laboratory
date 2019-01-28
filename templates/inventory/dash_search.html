@@ -1,59 +1,26 @@
+{% extends 'inventory/base.html'%}
 {% load staticfiles %}
 {% load static %}
 {% load inventory_tags %}
-<!DOCTYPE html>
-<html lang="en" class="no-js">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Lab Inventory Search</title>
-		<meta name="description" content="Manage your Lab Inventory with ease" />
-		<meta name="keywords" content="Inventory Management" />
-		<meta name="author" content="Codrops" />
-		<link rel="stylesheet" href="{% static 'inventory/vendor/bootstrap/css/bootstrap.min.css' %}" />
-		<link rel="shortcut icon" href="{% static 'inventory/images/favicon.ico' %}">
-		<link rel="stylesheet" type="text/css" href="{% static 'inventory/css/normalize.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'inventory/css/demo.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'inventory/css/component.css' %}" />
+
+{% block content %}
+{% block extra_js%}
+<script src="{% static 'inventory/js/tableCollapse.js' %}"></script>
+<script src="{% static 'inventory/vendor/jquery/jquery-3.3.1.slim.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/ajax/libs/popper/1.14.6/umd/popper.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+{% endblock extra_js %}
+
+<style>
+	#dataTable {
+		 color:black;
+		 background-color:white;
+		 margin-top:40px;
+		 width:100%;
+	}
+	</style>
 
 
-		<script src="{% static 'inventory/js/modernizr.custom.js' %}"></script>
-		<script src="{% static 'inventory/vendor/jquery/jquery-3.3.1.slim.min.js' %}"></script>
-        <script src="{% static 'inventory/vendor/ajax/libs/popper/1.14.6/umd/popper.min.js' %}"></script>
-        <script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-	</head>
-	<body style="height:100%;overflow: hidden;background: #34495e;">
-		<div class="containerDash">
-			<ul id="gn-menu" class="gn-menu-main"  style="z-index:100;position:absolute;">
-				<li class="gn-trigger">
-					<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
-					<nav class="gn-menu-wrapper">
-						<div class="gn-scroller">
-							<ul class="gn-menu">
-								<li><a class="gn-icon gn-icon-article" href="{% url 'index' %}">Dashboard</a></li>
-
-
-																<li>
-									<a class="gn-icon gn-icon-archive" href="{% url 'admin:index' %}">Admin</a>
-																	</li>
-								<li class="gn-search-item">
-								<a class="gn-icon gn-icon-search" href="#">Search</a>
-								</li>
-<li>
-									<a class="gn-icon gn-icon-download">Log Out</a>
-
-								</li>
-							</ul>
-						</div><!-- /gn-scroller -->
-					</nav>
-				</li>
-				<li><img src="{% static 'inventory/images/tulogo.png' %}" class="tulogo" alt="tulogo"></li>
-				<li><a href="#">Lab Inventory Management</a></li>
-
-
-				<li><a class="codrops-icon codrops-icon-drop" href="#"><span>New Admin</span></a></li>
-			</ul>
 			<header style="margin-left:-300px;margin-top:-180px;">
 				<span><h1 style="margin-top:80px;margin-left:500px;font-weight:bold;"> Out of order Products </h1></span>
 			<div class="row" style="margin-top:100px;margin-right:20px;">
@@ -92,9 +59,9 @@
 			<img src = "{% static 'inventory/images/search.svg' %}" style="width:20px;height:20px;position:absolute;top:10px;left:225px;opacity:0.5">
 		</div> -->
 		<div class="row">
-			<div class="col-2">
+			<div class="col">
 				{% if objCount%}
-				<table class="table table-hover table-bordered" style="color:black;background-color:white;width:80px;height:550px;margin-top:-76px;margin-left:-100px;">
+				<table class="table table-hover table-bordered" style="color:black;background-color:white;height:550px;margin-top:-76px;margin-left:-130px;width:200px;">
                     <thead class="thead-dark">
                         <tr class="table-primary">
                             <th scope="col">Equipments</th>
@@ -129,11 +96,11 @@
 
 	    </div>
 
-<div class="col-10" style="margin-top:-120px;overflow-y:scroll;height:600px;width:1500px;">
+<div class="col" style="margin-top:-120px;overflow-y:scroll;height:600px;width:900px;margin-left:-850px;">
 
-	<div class="collapse collapseExample1" style="overflow-y:scroll;height:700px;">
+	<div class="collapse collapseExample1">
 		{% if computerObj.all %}
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
+	 <table class="table table-bordered table-striped"  id="dataTable">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -174,7 +141,7 @@
 
 	<div class="collapse collapseExample2" style="overflow-y:scroll;height:700px;">
 		{% if laptopObj.all %}
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
+	 <table class="table table-bordered table-striped"  id="dataTable">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -213,9 +180,9 @@
 	 {% endif %}
 	</div>
 
-	<div class="collapse collapseExample3" style="overflow-y:scroll;height:700px;">
+	<div class="collapse collapseExample3">
 		{%if networkObj.all %}
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
+	 <table class="table table-bordered table-striped" id="dataTable">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -258,9 +225,9 @@
 	 {% endif %}
 	</div>
 
-	<div class="collapse collapseExample4" style="overflow-y:scroll;height:700px;">
+	<div class="collapse collapseExample4" >
 		{% if printerObj.all %}
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
+	 <table class="table table-bordered table-striped" id="dataTable">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -302,9 +269,9 @@
 	</div>
 
 
-	<div class="collapse collapseExample5" style="overflow-y:scroll;height:700px;">
+	<div class="collapse collapseExample5" >
 		{% if additionalObj.all %}
-	 <table class="table table-bordered table-striped" style="color:black;background-color:white;margin-top:40px;">
+	 <table class="table table-bordered table-striped" id="dataTable">
 		 <thead class="thead-dark">
 			 <tr>
 				 <th scope="col">Name</th>
@@ -355,60 +322,4 @@
 		</div>
 	</div>
 </header>
-	</div>
-		<!-- /container -->
-
-		<script src="{% static 'inventory/js/classie.js' %}"></script>
-		<script src="{% static 'inventory/js/gnmenu.js' %}"></script>
-		<script>
-			new gnMenu( document.getElementById( 'gn-menu' ) );
-		</script>
-
-		<script>
-			$(document).ready(function(){
-				 $(".collapseEmpty").collapse('show');
-				$(".collapse1").click(function(){
-					 $(".collapseExample2").collapse('hide');
-						$(".collapseExample3").collapse('hide');
-						$(".collapseExample4").collapse('hide');
-						$(".collapseExample5").collapse('hide');
-							$(".collapseEmpty").collapse('hide');
-					$(".collapseExample1").collapse('toggle');
-				});
-				$(".collapse2").click(function(){
-					$(".collapseExample1").collapse('hide');
-					$(".collapseExample3").collapse('hide');
-					$(".collapseExample4").collapse('hide');
-					$(".collapseExample5").collapse('hide');
-						$(".collapseEmpty").collapse('hide');
-				$(".collapseExample2").collapse('toggle');
-				});
-				$(".collapse3").click(function(){
-					$(".collapseExample1").collapse('hide');
-				 $(".collapseExample2").collapse('hide');
-				 $(".collapseExample4").collapse('hide');
-				 $(".collapseExample5").collapse('hide');
-					$(".collapseEmpty").collapse('hide');
-			 $(".collapseExample3").collapse('toggle');
-				});
-				$(".collapse4").click(function(){
-				 $(".collapseExample1").collapse('hide');
-					$(".collapseExample2").collapse('hide');
-				$(".collapseExample3").collapse('hide');
-				$(".collapseExample5").collapse('hide');
-					$(".collapseEmpty").collapse('hide');
-				$(".collapseExample4").collapse('toggle');
-			 });
-			 $(".collapse5").click(function(){
-				 $(".collapseExample1").collapse('hide');
-				$(".collapseExample2").collapse('hide');
-				$(".collapseExample3").collapse('hide');
-				$(".collapseExample4").collapse('hide');
-					$(".collapseEmpty").collapse('hide');
-			$(".collapseExample5").collapse('toggle');
-			 });
-			});
-		</script>
-
-	</body>
-</html>
+{% endblock content %}

@@ -221,6 +221,8 @@
 		height: 60px
 }
 
+
+
 @media screen and (max-width: 422px) {
 	.gn-menu-wrapper.gn-open-all {
 			-webkit-transform: translateX(0px);
@@ -232,7 +234,13 @@
 	.gn-menu-wrapper.gn-open-all .gn-scroller {
 			width: 130%
 	}
+
+
+
 }
+
+
+
 .tulogo {
 	width:40px;
 	height:35px;
@@ -291,32 +299,4 @@ display: block;
 max-height: 650px;
 overflow-y: auto;
 -ms-overflow-style: -ms-autohiding-scrollbar;
-}
-
-#equipmentList {
-	font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
-  border-bottom: 1px solid #ccc;
-
-}
-
-#equipmentList:last-child {
-  border: none;
-}
-
-#equipmentList a {
-  text-decoration: none;
-  color: #000;
-
-  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
-  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
-  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
-  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
-  transition: font-size 0.3s ease, background-color 0.3s ease;
-  display: block;
-  width: 200px;
-}
-
-#equipmentList a:hover {
-  font-size: 30px;
-  background: #f6f6f6;
 }
