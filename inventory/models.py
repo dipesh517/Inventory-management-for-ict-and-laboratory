@@ -12,11 +12,11 @@ class Item(models.Model):
         (OUT_OF_ORDER, 'Out of Order'),
         (IN_MAINTENANCE, 'In Maintenance')
     )
-    name = models.CharField(max_length=50, default='Generic', help_text='Enter the brand name of the item')
-    model = models.CharField(max_length=50, default='Generic', help_text='Enter the model of the item')
-    cost = models.DecimalField(decimal_places=2, max_digits=10, null=True, help_text='Enter the cost of the item')
-    room = models.ForeignKey('Room', null=True, on_delete=models.SET_NULL, help_text='Select room where it is kept')
-    date_of_acquire = models.DateField(default=datetime.date.today, help_text='Enter the date of acquire')
+    name = models.CharField(max_length=50, default='Generic')
+    model = models.CharField(max_length=50, default='Generic')
+    cost = models.DecimalField(decimal_places=2, max_digits=10, null=True,blank='True')
+    room = models.ForeignKey('Room', null=True, on_delete=models.SET_NULL,blank='True')
+    date_of_acquire = models.DateField(default=datetime.date.today,blank='True')
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default=WORKING)
     created = models.DateTimeField(auto_now_add=True, null=True)
     last_modified = models.DateTimeField(auto_now=True, null=True)
@@ -53,15 +53,15 @@ class Laptop(Item):
 
 
 class NetworkSwitch(Item):
-    no_of_ports = models.PositiveSmallIntegerField(help_text='Enter the number of ports')
-    no_of_SFP_ports = models.PositiveSmallIntegerField(help_text='Enter the number of SFP ports')
+    no_of_ports = models.PositiveSmallIntegerField(help_text='Enter the number of ports',blank='True',null='True')
+    no_of_SFP_ports = models.PositiveSmallIntegerField(help_text='Enter the number of SFP ports',blank='True',null='True')
 
     class Meta:
         verbose_name_plural = 'Network Switches'
 
 
 class Printer(Item):
-    ip_address = models.GenericIPAddressField(help_text='Enter the ip address for this printer')
+    ip_address = models.GenericIPAddressField(help_text='Enter the ip address for this printer',blank='True',null='True')
 
 
 class AdditionalItem(Item):

@@ -126,14 +126,16 @@ All
 	 <td>{{obj.last_modified}}</td>
 	 <td>{{obj.room.floor}}</td>
 	 <td>{{obj.room}}</td>
-	 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
-	 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+	 <td> <a href="{% url 'editComputer' obj.pk %}"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+	 <td><a href="{% url 'deleteComputer' obj.pk %}"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
  </tr>
  {% endfor %}
 </tbody>
 </table>
 {% else %}
-<h1> There is no  any {% equipment1_name% } </h1>
+<div class="alert alert-danger" style="margin-top:50px;" role="alert">
+There is no {% equipment1_name %}
+</div>
 {% endif %}
 </div>
 
@@ -165,8 +167,8 @@ All
 	 <td>{{obj.last_modified}}</td>
 	 <td>{{obj.room.floor}}</td>
 	 <td>{{obj.room}}</td>
-	 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
-	 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+	 <td> <a href="{% url 'editLaptop'  obj.pk%}"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+	 <td><a href="{% url 'deleteLaptop' obj.pk %}"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
  </tr>
  {% endfor %}
 </tbody>
@@ -210,8 +212,8 @@ There is no {% equipment2_name %}
 	 <td>{{obj.last_modified}}</td>
 	 <td>{{obj.room.floor}}</td>
 	 <td>{{obj.room}}</td>
-	 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
-	 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+	 <td> <a href="{% url 'editNetworkSwitch' obj.pk %}"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+	 <td><a href="{% url 'deleteNetworkSwitch' obj.pk %}"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
  </tr>
  {% endfor %}
 </tbody>
@@ -253,8 +255,8 @@ There is no {% equipment3_name %}
 	 <td>{{obj.last_modified}}</td>
 	 <td>{{obj.room.floor}}</td>
 	 <td>{{obj.room}}</td>
-	 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
-	 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+	 <td> <a href="{% url 'editPrinter'  obj.pk%}"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+	 <td><a href="{% url 'deletePrinter' obj.pk %}"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
  </tr>
  {% endfor %}
 </tbody>
@@ -295,8 +297,8 @@ There is no {% equipment4_name %}
 	 <td>{{obj.last_modified}}</td>
 	 <td>{{obj.room.floor}}</td>
 	 <td>{{obj.room}}</td>
-	 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
-	 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+	 <td> <a href="{% url 'editAdditionalItem' obj.pk%}"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+	 <td><a href="{% url 'deleteAdditionalItem' obj.pk %}"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
  </tr>
  {% endfor %}
 </tbody>

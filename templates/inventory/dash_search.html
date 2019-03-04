@@ -126,8 +126,8 @@
 				 <td>{{obj.last_modified}}</td>
 				 <td>{{obj.room.floor}}</td>
 				 <td>{{obj.room}}</td>
-				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
-				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td> <a href="{% url 'editComputer' obj.pk %}"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td><a href="{% url 'deleteComputer' obj.pk %}"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>
@@ -167,8 +167,8 @@
 				 <td>{{obj.last_modified}}</td>
 				 <td>{{obj.room.floor}}</td>
 				 <td>{{obj.room}}</td>
-				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
-				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td> <a href="{% url 'editLaptop' obj.pk%}"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td><a href="{% url 'deleteLaptop' obj.pk %}"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>
@@ -212,8 +212,8 @@
 				 <td>{{obj.last_modified}}</td>
 				 <td>{{obj.room.floor}}</td>
 				 <td>{{obj.room}}</td>
-				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
-				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td> <a href="{% url 'editNetworkSwitch' obj.pk%}"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td><a href="{% url 'deleteNetworkSwitch' obj.pk %}"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>
@@ -255,8 +255,8 @@
 				 <td>{{obj.last_modified}}</td>
 				 <td>{{obj.room.floor}}</td>
 				 <td>{{obj.room}}</td>
-				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
-				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td> <a href="{% url 'editPrinter' obj.pk%}"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td><a href="{% url 'deletePrinter' obj.pk %}"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>
@@ -297,8 +297,8 @@
 				 <td>{{obj.last_modified}}</td>
 				 <td>{{obj.room.floor}}</td>
 				 <td>{{obj.room}}</td>
-				 <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
-				 <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td> <a href="{% url 'editAdditionalItem' obj.pk%}"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+				 <td><a href="{% url 'deleteAdditionalItem' obj.pk %}"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td>
 			 </tr>
 			 {% endfor %}
 		 </tbody>

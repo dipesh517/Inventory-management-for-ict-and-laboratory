@@ -1,0 +1,27 @@
+{% extends 'inventory/addByQuantity/addByQuantityBase.html'%}
+{% load staticfiles %}
+{% load static %}
+{% load inventory_tags %}
+
+{% block heading%}
+Add a Printer By Quantity
+{% endblock heading%}
+{% block content2%}
+
+<div style="margin-top:7%;">
+  <div class="card" style="width: 20rem;color:black;">
+    <div style="padding:30px;">
+  <h4 style="padding-bottom:10px;font-weight:bold;font-size:30px;">{% equipment4_name%}</h4>
+<form method="POST" action="{% url 'addByQuantityPrinter'%}">
+  {% csrf_token %}
+  <p>Enter quantity</p>
+  {{form.Quantity}}
+  <p>Enter room Number(Optional)</p>
+  {{form.Room}}
+<br>
+<button type="submit" class="btn btn-primary" style="margin-top:10px;">Add</button>
+</form>
+</div>
+</div>
+</div>
+{% endblock content2%}

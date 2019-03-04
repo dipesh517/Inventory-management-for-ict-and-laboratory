@@ -1,0 +1,49 @@
+{% extends 'inventory/base.html'%}
+{% load staticfiles %}
+{% load static %}
+{% load inventory_tags %}
+
+{% block content %}
+<header style="margin-left:-300px;margin-top:-180px;">
+  <span><h1 style="margin-top:80px;margin-left:500px;font-weight:bold;"> {% block heading%}{% endblock heading %} </h1></span>
+  <div class="row">
+    <div class="col-3">
+<h5>Select any category to add</h5>
+    <table class="table table-hover table-bordered" style="color:black;background-color:white;height:550px;width:200px;">
+  <thead class="thead-dark">
+  	<tr class="table-primary">
+  		<th scope="col">Equipments</th>
+
+  	</tr>
+  </thead>
+  <tbody>
+  <tr>
+  	<td> <a  href="{% url 'addByQuantityComputer'%}" class="collapse1">{% equipment1_name%}</a></td>
+
+  </tr>
+  <tr>
+  	<td> <a  href="{% url 'addByQuantityLaptop'%}" class="collapse2">{% equipment2_name%}</a></td>
+
+  </tr>
+  		<tr>
+  	<td><a  href="{% url 'addByQuantityNetworkSwitch'%}" class="collapse3"> {% equipment3_name%}</a></td>
+
+  </tr>
+  	<tr>
+  	<td> <a  href="{% url 'addByQuantityPrinter'%}" class="collapse4"> {% equipment4_name%}</a></td>
+
+  </tr>
+  	<tr>
+  	<td> <a  href="{% url 'addByQuantityAdditionalItem'%}" class="collapse5">{% equipment5_name%}</a></td>
+
+
+  </tr>
+  </tbody>
+  </table>
+  </div>
+
+{% block content2%}
+{% endblock content2%}
+</div>
+</header>
+{% endblock content%}

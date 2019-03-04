@@ -1,0 +1,129 @@
+{% extends 'inventory/base.html'%}
+{% load staticfiles %}
+{% load inventory_tags %}
+{% load static %}
+{% block content %}
+
+{% block extra_js%}
+<script src="{% static 'inventory/js/tableCollapse.js' %}"></script>
+<script src="{% static 'inventory/vendor/jquery/jquery-3.3.1.slim.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/ajax/libs/popper/1.14.6/umd/popper.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+{% endblock extra_js %}
+<header style="margin-left:-300px;margin-top:-180px;color:black;">
+<div style = "margin-top:6vw" >
+<h1 class = " text-left" style = "margin-left:3.1vw;color:white;font-size:40px;font-weight:950;"> Add new Items</h1>
+</div>
+<div class="row well" style="margin:1vw" >
+  <div class ="col-md-3 well" style="margin-right:1vw">
+    <div class="list-group" id="myList" role="tablist">
+      <a class="list-group-item list-group-item-action link" data-toggle="list" href="#laptop" role="tab">Laptop</a>
+      <a class="list-group-item list-group-item-action  link" data-toggle="list" href="#computer" role="tab">Computer</a>
+      <a class="list-group-item list-group-item-action link" data-toggle="list" href="#printer" role="tab">Printer</a>
+      <a class="list-group-item list-group-item-action link" data-toggle="list" href="#networkswitch" role="tab">Network Switches</a>
+      <a class="list-group-item list-group-item-action active link" data-toggle="list"   href="#additionalitems" role="tab">Additional Items</a>
+    </div>
+  </div>
+  <div class ="col-md-8 well" style="overflow-y:scroll;height:600px;">
+    <div class="tab-content">
+<!-- add computers -->
+      <div class="tab-pane " id="computer" role="tabpanel">
+          <div class="card" style="width: 40rem;">
+            <div style="padding:20px;">
+        <div style = "margin:1vw" >
+          <h1 class = " text-left" style="font-size:30px;font-weight:bold;"> Add Computer</h1>
+        </div>
+
+        <form action="{% url 'addview' %}" method="POST" >
+
+          {% csrf_token %}
+          {{ form1.as_p }}
+
+          <input type="hidden" name="type" value="computer" />
+          <input type="submit" class="btn btn-primary" value ="Add">
+
+        </form>
+        </div>
+        </div>
+    </div>
+
+
+<!-- add laptop -->
+      <div class="tab-pane" id="laptop" role="tabpanel">
+          <div class="card" style="width: 40rem;">
+              <div style="padding:20px;">
+        <div style = "margin:1vw">
+        <h1 class = " text-left" style="font-size:30px;font-weight:bold;"> Add Laptop</h1>
+        </div>
+        <form action="{% url 'addview' %}" method="POST">
+          {% csrf_token %}
+          {{ form2.as_p }}
+          <input type="hidden" name="type" value="laptop" />
+          <input type="submit" class="btn btn-primary" value ="Add">
+        </form>
+
+        </div>
+  </div>
+  </div>
+<!-- add printers -->
+      <div class="tab-pane" id="printer" role="tabpanel">
+        <div class="card" style="width: 40rem;">
+            <div style="padding:20px;">
+        <div style = "margin:1vw">
+        <h1 class = " text-left"  style="font-size:30px;font-weight:bold;"> Add Printer</h1>
+        </div>
+        <form action="{% url 'addview' %}" method="POST">
+          {% csrf_token %}
+          {{ form3.as_p }}
+          <input type="hidden" name="type" value="printer" />
+          <input type="submit" class="btn btn-primary" value ="Add">
+        </form>
+        </div>
+        </div>
+      </div>
+<!-- add networkswitch -->
+      <div class="tab-pane" id="networkswitch" role="tabpanel">
+        <div class="card" style="width: 40rem;">
+            <div style="padding:20px;">
+        <div style = "margin:1vw">
+        <h1 class = " text-left" style="font-size:30px;font-weight:bold;"> Add Network Switch</h1>
+        </div>
+        <form action="{% url 'addview' %}" method="POST">
+          {% csrf_token %}
+          {{ form4.as_p }}
+          <input type="hidden" name="type" value="networkswitch" />
+            <input type="submit" class="btn btn-primary" value ="Add">
+        </form>
+        </div>
+        </div>
+      </div>
+
+<!-- add additional items -->
+      <div class="tab-pane active" id="additionalitems" role="tabpanel">
+        <div class="card" style="width: 40rem;">
+            <div style="padding:20px;">
+        <div style = "margin:1vw">
+        <h1 class = " text-left"  style="font-size:30px;font-weight:bold;"> Add Additional Item</h1>
+        </div>
+        <form action="{% url 'addview' %}" method="POST">
+          {% csrf_token %}
+          {{ form5.as_p }}
+          <input type="hidden" name="type" value="additionalitem" />
+          <input type="submit" class="btn btn-primary" value ="Add">
+        </form>
+    </div>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+<!-- the script to activate the tabs -->
+<script>
+$('#myList a').on('click', function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+</script>
+
+{% endblock content %}
