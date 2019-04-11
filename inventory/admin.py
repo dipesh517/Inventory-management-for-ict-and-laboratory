@@ -1,20 +1,7 @@
 from django.contrib import admin
-from .models import Room
-from .models import Computer
-from .models import Laptop
-from .models import NetworkSwitch
-from .models import Printer
-from .models import AdditionalItem
-from.models import Floor
-
-
+from .models import Categorie, Item, Floor, Room
 # Register your models here.
-
-
-admin.site.register(Room)
-admin.site.register(Computer)
-admin.site.register(Laptop)
-admin.site.register(NetworkSwitch)
-admin.site.register(Printer)
-admin.site.register(AdditionalItem)
+admin.site.register(Categorie)
+admin.site.register(Item)
 admin.site.register(Floor)
+admin.site.register(Room)

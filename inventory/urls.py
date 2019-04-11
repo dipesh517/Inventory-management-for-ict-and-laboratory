@@ -1,30 +1,26 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
-    path('dashboard/', views.dashboardView, name='index'),
-    path('', views.loginView, name='login'),
-    path('tableICT/', views.tableICTView, name='tableICT'),
-    path('tableLAB/', views.tableLABView, name='tableLAB'),
-    path('testurl/<int:floorNo>/<int:roomNo>', views.testView, name='testUrl'),
-    path('dashsearch/<int:floorNo>/<int:roomNo>', views.dashSearchView, name='dashsearchUrl'),
-    path('dashsearch2/<int:floorNo>/<int:roomNo>', views.dashSearch2View, name='dashsearch2Url'),
-    path('addByQuantityComputer',views.addItemByQuantityComputerView,name="addByQuantityComputer"),
-    path('addByQuantityLaptop',views.addItemByQuantityLaptopView,name="addByQuantityLaptop"),
-    path('addByQuantityNetworkSwitch',views.addItemByQuantityNetworkSwitchView,name="addByQuantityNetworkSwitch"),
-    path('addByQuantityPrinter',views.addItemByQuantityPrinterView,name="addByQuantityPrinter"),
-    path('addByQuantityAdditionalItem',views.addItemByQuantityAdditionalItemView,name="addByQuantityAdditionalItem"),
-    path('addByQuantityBase',views.addItemByQuantityBaseView,name="addByQuantityBase"),
-    path('add',views.addItemsView,name='addview'),
-    path('delete/Computer/<int:key>',views.deleteComputerView,name='deleteComputer'),
-    path('delete/Laptop/<int:key>',views.deleteLaptopView,name='deleteLaptop'),
-    path('delete/NetworkSwitch/<int:key>',views.deleteNetworkSwitchView,name='deleteNetworkSwitch'),
-    path('delete/Printer/<int:key>',views.deletePrinterView,name='deletePrinter'),
-    path('delete/AdditionalItem/<int:key>',views.deleteAdditionalItemView,name='deleteAdditionalItem'),
-    path('edit/Computer/<int:key>',views.editComputerView,name='editComputer'),
-    path('edit/Laptop/<int:key>',views.editLaptopView,name='editLaptop'),
-    path('edit/NetworkSwitch/<int:key>',views.editNetworkSwitchView,name='editNetworkSwitch'),
-    path('edit/Printer/<int:key>',views.editPrinterView,name='editPrinter'),
-    path('edit/AdditionalItem/<int:key>',views.editAdditionalItemView,name='editAdditionalItem'),
+    path('dashboard/', views.dashboardView, name='dashboard'),
+    path('add1/', views.add1, name='add1'),
+    path('add2/<int:key>', views.add2, name='add2'),
+    path('register/', views.register, name='register'),
+    path('', auth_views.LoginView.as_view(template_name='inventory/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='inventory/logout.html'), name='logout'),
+    path('addExisting/<int:key>', views.addExisting, name='addExisting'),
+    path('allocate/<int:key>', views.allocate, name='allocate'),
+    path('search/<int:floorNumber>/<int:roomNumber>', views.search, name='search'),
+    path('search2/<int:floorNumber>/<int:roomNumber>', views.search2, name='search2'),
+    path('search3/<int:floorNumber>/<int:roomNumber>', views.search3, name='search3'),
+    path('delete/<int:key>',views.delete,name='delete'),
+    path('edit/<int:key>',views.edit,name='edit'),
+    path('editcategory/',views.editcategory,name='editcategory'),
+    path('editcategory/<int:key>',views.editcategory2,name='editcategory2'),
+    path('createroom/',views.createroom,name='createroom'),
+    path('createfloor/',views.createfloor,name='createfloor'),
+
 
 ]

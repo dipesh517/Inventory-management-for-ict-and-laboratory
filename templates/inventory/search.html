@@ -1,0 +1,540 @@
+{% extends 'inventory/dashboard.html'%}
+{% load inventory_tags %}
+{%load staticfiles%}
+{%load static%}
+{%block content%}
+{% block extra_js%}
+<script src="{% static 'inventory/js/tableCollapse.js' %}"></script>
+<script src="{% static 'inventory/js/tableSearch.js' %}"></script>
+<script src="{% static 'inventory/vendor/jquery/jquery-3.3.1.slim.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/ajax/libs/popper/1.14.6/umd/popper.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+
+
+{% endblock extra_js %}
+  <style>
+  .col1{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+  }
+    .row1{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+    .row2{
+      display: block;
+      text-align: center;
+    }
+    tr{
+      font-size:12px;
+      line-height: 20px;
+    }
+    .padd {
+      padding:10px;
+    }
+    .imghoverzoom:hover {
+      transform: scale(1.4);
+    }
+  </style>
+
+<div class="row" style="margin-top:80px;">
+
+  <div class="col-2">
+
+    <div class="list-group" style="width:180px;height:250px;font-size:12px;overflow-y:scroll;">
+    <h5 style="color:white;">  Floor </h5>
+    {% url 'search' 999 999 as urlFloorAll%}
+    <a href="{{urlFloorAll}}" {% if request.path == urlFloorAll %} class="active list-group-item list-group-item-action"{% endif %} class="list-group-item list-group-item-action">All</a>
+    {% for floorNo in floor%}
+    {% url 'search' floorNo.pk 999 as urlFloorSelect %}
+      <a href="{{urlFloorSelect}}" {% if request.path == urlFloorSelect %} class="active list-group-item list-group-item-action"{% endif %} class="list-group-item list-group-item-action">{{floorNo}}</a>
+    {% endfor%}
+    </div>
+
+    <div class="list-group" style="width:180px;font-size:12px;height:350px;overflow-y:scroll;">
+    <h5 style="color:white;">Room</h5>
+    {% for roomNo in room%}
+      {% url 'search' 999 roomNo.pk as urlRoomSelect%}
+      <a href="{{urlRoomSelect}}" {% if request.path == urlRoomSelect %} class="active list-group-item list-group-item-action"{% endif %} class="list-group-item list-group-item-action">{{roomNo}}</a>
+    {% endfor%}
+    </div>
+
+  </div>
+
+  <div class="col-2" style="overflow-y:scroll;margin-left:-50px;">
+    <h5 style="color:white;">Category</h5>
+
+      <div class="list-group" id="myList" role="tabList" style="font-size:12px;">
+
+      {% for category in categories%}
+        <a class="list-group-item list-group-item-action link" data-toggle="list" role="tab" href="{% cycle '#tab1' '#tab2' '#tab3' '#tab4' '#tab5' '#tab6' '#tab7' '#tab8' '#tab9' '#tab10' %}">{{category}}</a>
+      {% endfor%}
+      </div>
+
+  </div>
+
+  <div class="col-8">
+    <h2 style="color:white;font-size:20px;">All products Search</h2>
+<input type="text" id="myInput1" onkeyup="myFunction1()" placeholder="Search by name.." class="form-control" style="width:50%;height:35px;">
+    <div class="tab-content" style="width:950px;">
+      {% for category in categories%}
+        <div class="tab-pane" id="{% cycle 'tab1' 'tab2' 'tab3' 'tab4' 'tab5' 'tab6' 'tab7' 'tab8' 'tab9' 'tab10' %}" role="tabpanel">
+
+          <table class="table table-bordered table-striped" id="dataTableAll" style="background:white;width:100%;" >
+          <thead class="thead-dark">
+           <tr>
+             <th scope="col">Name</th>
+             <th scope="col">Model</th>
+             <th scope="col">Working</th>
+             <th scope="col">Out Of Order</th>
+             <th scope="col">In Maintenance</th>
+             <th scope="col">Room</th>
+             <th scope="col">Cost per item</th>
+             <!-- <th scope="col">Edit</th>
+             <th scope="col">Delete</th> -->
+             {% if category.extra_fields%}
+             {% for key, value in category.extra_fields.items %}
+            <th scope="col"> {{ value }} </th>
+             {% endfor %}
+             {% endif %}
+           </tr>
+          </thead>
+          <tbody>
+            {% if forloop.counter0 == 0 %}
+           {% for item in item0%}
+           <tr>
+             <td>{{item.name}}</td>
+             <td>{{item.model}}</td>
+             <td>{{item.working}}</td>
+             <td>{{item.out_of_order}}</td>
+             <td>{{item.in_maintenance}}</td>
+             <td>{{item.room}}</td>
+             <td>{{item.cost_per_item}}</td>
+             <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+             <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+             {% if item.extra_value%}
+             {% for key, value in item.extra_value.items %}
+            <td> {{value}} </td>
+
+             {% endfor %}
+             {% endif %}
+             <td>
+               <div class="dropdown show">
+                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+                 </a>
+             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+             <a class="dropdown-item padd" href="{% url 'addExisting' item.pk %}">Add</a>
+             <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+             <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+             <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+             </div>
+             </div>
+               </td>
+
+           </tr>
+           {% endfor %}
+           {% endif %}
+           {% if forloop.counter0 == 1 %}
+          {% for item in item1%}
+          <tr>
+            <td>{{item.name}}</td>
+            <td>{{item.model}}</td>
+            <td>{{item.working}}</td>
+            <td>{{item.out_of_order}}</td>
+            <td>{{item.in_maintenance}}</td>
+            <td>{{item.room}}</td>
+            <td>{{item.cost_per_item}}</td>
+            <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+            <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+            {% if item.extra_value%}
+            {% for key, value in item.extra_value.items %}
+           <td> {{value}} </td>
+            {% endfor %}
+            {% endif %}
+            <td>
+              <div class="dropdown show">
+                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+                </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+            <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+            <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+            </div>
+            </div>
+              </td>
+          </tr>
+          {% endfor %}
+          {% endif %}
+          {% if forloop.counter0 == 2 %}
+         {% for item in item2%}
+         <tr>
+           <td>{{item.name}}</td>
+           <td>{{item.model}}</td>
+           <td>{{item.working}}</td>
+           <td>{{item.out_of_order}}</td>
+           <td>{{item.in_maintenance}}</td>
+           <td>{{item.room}}</td>
+           <td>{{item.cost_per_item}}</td>
+           <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+           <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+           {% if item.extra_value%}
+           {% for key, value in item.extra_value.items %}
+          <td> {{value}} </td>
+           {% endfor %}
+           {% endif %}
+           <td>
+             <div class="dropdown show">
+               <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+               </a>
+           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+           <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+           <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+           <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+           </div>
+           </div>
+             </td>
+         </tr>
+         {% endfor %}
+         {% endif %}
+         {% if forloop.counter0 == 3 %}
+        {% for item in item3%}
+        <tr>
+          <td>{{item.name}}</td>
+          <td>{{item.model}}</td>
+          <td>{{item.working}}</td>
+          <td>{{item.out_of_order}}</td>
+          <td>{{item.in_maintenance}}</td>
+          <td>{{item.room}}</td>
+          <td>{{item.cost_per_item}}</td>
+          <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+          <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+          {% if item.extra_value%}
+          {% for key, value in item.extra_value.items %}
+         <td> {{value}} </td>
+          {% endfor %}
+          {% endif %}
+          <td>
+            <div class="dropdown show">
+              <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+              </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+          <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+          <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+          </div>
+          </div>
+            </td>
+        </tr>
+
+        {% endfor %}
+        {% endif %}
+        {% if forloop.counter0 == 4 %}
+       {% for item in item4%}
+       <tr>
+         <td>{{item.name}}</td>
+         <td>{{item.model}}</td>
+         <td>{{item.working}}</td>
+         <td>{{item.out_of_order}}</td>
+         <td>{{item.in_maintenance}}</td>
+         <td>{{item.room}}</td>
+         <td>{{item.cost_per_item}}</td>
+         <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+         <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+         {% if item.extra_value%}
+         {% for key, value in item.extra_value.items %}
+        <td> {{value}} </td>
+         {% endfor %}
+         {% endif %}
+         <td>
+           <div class="dropdown show">
+             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+             </a>
+         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+         <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+         <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+         <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+         </div>
+         </div>
+           </td>
+       </tr>
+       {% endfor %}
+       {% endif %}
+       {% if forloop.counter0 == 5 %}
+      {% for item in item5%}
+      <tr>
+        <td>{{item.name}}</td>
+        <td>{{item.model}}</td>
+        <td>{{item.working}}</td>
+        <td>{{item.out_of_order}}</td>
+        <td>{{item.in_maintenance}}</td>
+        <td>{{item.room}}</td>
+        <td>{{item.cost_per_item}}</td>
+        <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+        <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+        {% if item.extra_value%}
+        {% for key, value in item.extra_value.items %}
+       <td> {{value}} </td>
+        {% endfor %}
+        {% endif %}
+        <td>
+          <div class="dropdown show">
+            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+            </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+        <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+        <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+        </div>
+        </div>
+          </td>
+      </tr>
+
+      {% endfor %}
+      {% endif %}
+      {% if forloop.counter0 == 6 %}
+     {% for item in item6%}
+     <tr>
+       <td>{{item.name}}</td>
+       <td>{{item.model}}</td>
+       <td>{{item.working}}</td>
+       <td>{{item.out_of_order}}</td>
+       <td>{{item.in_maintenance}}</td>
+       <td>{{item.room}}</td>
+       <td>{{item.cost_per_item}}</td>
+       <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+       <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+       {% if item.extra_value%}
+       {% for key, value in item.extra_value.items %}
+      <td> {{value}} </td>
+       {% endfor %}
+       {% endif %}
+       <td>
+         <div class="dropdown show">
+           <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+           </a>
+       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+       <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+       <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+       <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+       </div>
+       </div>
+         </td>
+     </tr>
+
+     {% endfor %}
+     {% endif %}
+     {% if forloop.counter0 == 7 %}
+    {% for item in item7%}
+    <tr>
+      <td>{{item.name}}</td>
+      <td>{{item.model}}</td>
+      <td>{{item.working}}</td>
+      <td>{{item.out_of_order}}</td>
+      <td>{{item.in_maintenance}}</td>
+      <td>{{item.room}}</td>
+      <td>{{item.cost_per_item}}</td>
+      <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+      <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+      {% if item.extra_value%}
+      {% for key, value in item.extra_value.items %}
+     <td> {{value}} </td>
+      {% endfor %}
+      {% endif %}
+      <td>
+        <div class="dropdown show">
+          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+          </a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+      <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+      <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+      </div>
+      </div>
+        </td>
+    </tr>
+
+    {% endfor %}
+    {% endif %}
+    {% if forloop.counter0 == 8 %}
+   {% for item in item8%}
+   <tr>
+     <td>{{item.name}}</td>
+     <td>{{item.model}}</td>
+     <td>{{item.working}}</td>
+     <td>{{item.out_of_order}}</td>
+     <td>{{item.in_maintenance}}</td>
+     <td>{{item.room}}</td>
+     <td>{{item.cost_per_item}}</td>
+     <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+     <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+     {% if item.extra_value%}
+     {% for key, value in item.extra_value.items %}
+    <td> {{value}} </td>
+     {% endfor %}
+     {% endif %}
+     <td>
+       <div class="dropdown show">
+         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+         </a>
+     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+     <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+     <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+     <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+     </div>
+     </div>
+       </td>
+   </tr>
+
+   {% endfor %}
+   {% endif %}
+   {% if forloop.counter0 == 9 %}
+  {% for item in item9%}
+  <tr>
+    <td>{{item.name}}</td>
+    <td>{{item.model}}</td>
+    <td>{{item.working}}</td>
+    <td>{{item.out_of_order}}</td>
+    <td>{{item.in_maintenance}}</td>
+    <td>{{item.room}}</td>
+    <td>{{item.cost_per_item}}</td>
+    <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+    <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+    {% if item.extra_value%}
+    {% for key, value in item.extra_value.items %}
+   <td> {{value}} </td>
+    {% endfor %}
+    {% endif %}
+    <td>
+      <div class="dropdown show">
+        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+        </a>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+    <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+    <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+    </div>
+    </div>
+      </td>
+  </tr>
+
+  {% endfor %}
+  {% endif %}
+  {% if forloop.counter0 == 10 %}
+ {% for item in item10%}
+ <tr>
+   <td>{{item.name}}</td>
+   <td>{{item.model}}</td>
+   <td>{{item.working}}</td>
+   <td>{{item.out_of_order}}</td>
+   <td>{{item.in_maintenance}}</td>
+   <td>{{item.room}}</td>
+   <td>{{item.cost_per_item}}</td>
+   <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+   <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+   {% if item.extra_value%}
+   {% for key, value in item.extra_value.items %}
+  <td> {{value}} </td>
+   {% endfor %}
+   {% endif %}
+   <td>
+     <div class="dropdown show">
+       <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+       </a>
+   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+   <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+   <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+   <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+   </div>
+   </div>
+     </td>
+ </tr>
+
+ {% endfor %}
+ {% endif %}
+          </tbody>
+          </table>
+
+
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+$('#myList a[href="#tab1"]').tab('show')
+$('#myList a').on('click', function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+
+})
+function myFunction1() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput1");
+  filter = input.value.toUpperCase();
+  if ($("#tab1").is(":visible")){
+    table = document.getElementById("tab1");
+  }
+  else if ($("#tab2").is(":visible")){
+    table = document.getElementById("tab2");
+  }
+  else if ($("#tab3").is(":visible")){
+    table = document.getElementById("tab3");
+  }
+  else if ($("#tab4").is(":visible")){
+    table = document.getElementById("tab4");
+  }
+  else if ($("#tab5").is(":visible")){
+    table = document.getElementById("tab5");
+  }
+  else if ($("#tab6").is(":visible")){
+    table = document.getElementById("tab6");
+  }
+  else if ($("#tab7").is(":visible")){
+    table = document.getElementById("tab7");
+  }
+  else if ($("#tab8").is(":visible")){
+    table = document.getElementById("tab8");
+  }
+  else if ($("#tab9").is(":visible")){
+    table = document.getElementById("tab9");
+  }
+  else if ($("#tab10").is(":visible")){
+    table = document.getElementById("tab10");
+  }
+
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+{% endblock content %}

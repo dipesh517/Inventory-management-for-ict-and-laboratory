@@ -1,0 +1,58 @@
+{% extends 'inventory/dashboard.html'%}
+{% load inventory_tags %}
+{%load staticfiles%}
+{%load static%}
+{%load crispy_forms_tags %}
+{%block content%}
+  <style>
+    .row1{
+      position:absolute;
+      top:55%;
+      left: 45%;
+      transform: translate(-50%,-50%);
+    }
+    .row2{
+      position:absolute;
+      top:55%;
+      left: 75%;
+      transform: translate(-50%,-50%);
+    }
+
+  </style>
+
+
+<div class="row1">
+  {% if messages %}
+  {%for message in messages%}
+  <div class="alert alert-{{message.tags}}">
+  {{message}}
+  </div>
+  {% endfor%}
+  {% endif %}
+  <div class="card" style="width:400px;">
+    <div class="card-body">
+      <h3 class="card-title"> Allocate </h3>
+      <form method="POST">
+      {% csrf_token %}
+      {{allocateform|crispy}}
+      <button class="btn btn-info" type="Submit">Allocate</button>
+      </form>
+    </div>
+  </div>
+  </div>
+  <div class="row2">
+  <div class="card" style="width:300px;">
+
+    <div class="card-body">
+          <h6 class="card-title"> Current status </h6>
+    Room: {{room}} <br>
+    Working: {{working}} <br>
+    Out of order: {{out_of_order}} <br>
+    In Maintenance: {{in_maintenance}}
+</div>
+    </div>
+    </div>
+
+
+
+{%endblock%}

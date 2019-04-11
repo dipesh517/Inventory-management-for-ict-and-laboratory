@@ -1,70 +1,84 @@
-{% load staticfiles %}
+{% extends 'inventory/dashboard.html'%}
 {% load inventory_tags %}
-{% load static %}
-<!DOCTYPE html>
-<html lang="en" class="no-js">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Lab Inventory Dashboard</title>
-		<meta name="description" content="Manage your Lab Inventory with ease" />
-		<meta name="keywords" content="Inventory Management" />
-		<meta name="author" content="Codrops" />
-		<link rel="stylesheet" href="{% static 'inventory/vendor/bootstrap/css/bootstrap.min.css' %}" />
-		<link rel="shortcut icon" href="{% static 'inventory/images/favicon.ico' %}">
-		<link rel="stylesheet" type="text/css" href="{% static 'inventory/css/normalize.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'inventory/css/demo.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'inventory/css/component.css' %}" />
-		<script src="{% static 'inventory/js/modernizr.custom.js' %}"></script>
+{%load staticfiles%}
+{%load static%}
+{%block content%}
+  <style>
+  .col1{
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+  }
+    .row1{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+    .row2{
+      display: block;
+      text-align: center;
+    }
+    .row3{
+      position: relative;
+      left:50%;
 
-		{% block extra_js %}
-		{% endblock extra_js %}
+    }
+  </style>
 
-	</head>
-	<body style="height:100%;overflow:hidden;background: #34495e;">
-		<div class="containerDash">
-			<ul id="gn-menu" class="gn-menu-main" style="z-index:100;position:absolute;" >
-				<li class="gn-trigger">
-					<a class="gn-icon gn-icon-menu"><span>Menu</span></a>
-					<nav class="gn-menu-wrapper">
-						<div class="gn-scroller">
-							<ul class="gn-menu">
-								<li><a class="gn-icon gn-icon-article" href="{% url 'index'%}">Dashboard</a></li>
+  <div class="col1">
+    <div class="row2">
+      <h1 class="text-white" style="font-weight:bold;font-size:40px;">Inventory Management for ICTC and Department</h1>
+      <h2 class="text-white"> Pulchowk Campus, Lalitpur </h2>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+  <div class="row1">
+  <a href="{% url 'search' 999 999%}" style="text-decoration:none;"><div class="card hoverZoom bg-info text-white" style="width:270px;height:150px;">
+  <div class="card-body">
+    <h4 class="card-title">Total Items</h4>
+    <p class="card-text">{%total_products_count%}</p>
 
+  </div>
+</div></a>
+<a href="{% url 'search2' 999 999%}" style="text-decoration:none;">
+<div class="card hoverZoom bg-danger text-white" style="width:270px;height:150px;">
+ <div class="card-body">
+  <h4 class="card-title">Out Of Order Items</h4>
+  <p class="card-text">{%out_of_order_count%}</p>
 
-																<li>
-									<a class="gn-icon gn-icon-archive" href="{% url 'admin:index' %}">Admin</a>
-																	</li>
-								<li class="gn-search-item">
-								<a class="gn-icon gn-icon-search" href="{% url 'testUrl' 500 500 %}">Search</a>
-								</li>
-<li>
-									<a class="gn-icon gn-icon-download">Log Out</a>
+</div>
+</div>
+</a>
+<a href="{% url 'search3' 999 999%}" style="text-decoration:none;" >
+<div class="card hoverZoom bg-secondary text-white" style="width:270px;height:150px">
+ <div class="card-body">
+  <h4 class="card-title">In Maintenance Items</h4>
+  <p class="card-text">{%in_maintenance_count%}</p>
 
-								</li>
-							</ul>
-						</div><!-- /gn-scroller -->
-					</nav>
-				</li>
-				<li><img src="{% static 'inventory/images/tulogo.png' %}" class="tulogo" alt="tulogo"></li>
-				<li><a href="{% url 'index' %}">Lab Inventory Management</a></li>
+</div>
+</div>
+</a>
+</div>
+<br />
+<br />
+<br />
 
+<p class="hoverZoom">
+<a href="{%url 'add1' %}" style="color:rgb(80,177,92);font-weight:bold">
+  <img class="row3" src="{% static 'inventory/images/plus.png' %}" style="width:40px;height:40px;margin-left:0%;">
+<h1 style="font-family:Helvetica Neue;font-size:20px;color:rgb(80,177,92);font-weight:bold;text-align:center;padding-left:45px;">Add an item</h1>
+</a>
+</p>
 
-				<li><a class="codrops-icon codrops-icon-drop" href="#"><span>New Admin</span></a></li>
-			</ul>
-      {% block content %}
-
-{% endblock content %}
-	</div>
-		<!-- /container -->
-		<script src="{% static 'inventory/js/classie.js' %}"></script>
-		<script src="{% static 'inventory/js/gnmenu.js' %}"></script>
-
-    <script>
-      new gnMenu( document.getElementById( 'gn-menu' ) );
-      </script>
-
-	</body>
-
-</html>
+  </div>
+  {%if messages%}
+  {%for message in messages%}
+  <div class="alert alert-{{message.tags}}">
+    {{message}}
+  </div>
+  {%endfor%}
+  {%endif%}
+{%endblock%}

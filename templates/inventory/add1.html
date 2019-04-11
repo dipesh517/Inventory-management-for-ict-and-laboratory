@@ -1,0 +1,71 @@
+{% extends 'inventory/dashboard.html'%}
+{% load inventory_tags %}
+{%load staticfiles%}
+{%load static%}
+{%load crispy_forms_tags %}
+{%block content%}
+  <style>
+  .lmao{
+    padding-top: 90px;
+    text-align: center;
+  }
+  .card-body{
+    padding: 20px 25px 20px 25px;
+  }
+  .col1{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+  }
+    .row1{
+      padding-top: 15px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+    /* .col2{
+      display: flex;
+      flex-direction: column;
+    } */
+  </style>
+
+    <h1 class="text-white lmao" style="font-weight:bold;">Add an item</h1>
+    {% if messages %}
+    {%for message in messages%}
+    <div class="alert alert-{{message.tags}}">
+    {{message}}
+    </div>
+    {% endfor%}
+    {% endif %}
+    <div class="col-md-9">
+  <div class="row1">
+
+    <div class="col-7" align="center">
+      <div class="card" style="width:400px;height:500px;overflow-y:scroll;">
+        <div class="card-body">
+          <h4 class="card-title"> Select a category for the item</h4>
+          <div class="card-text list-group">
+            {% for category in categories%}
+            <a class="list-group-item list-group-item-action" href="{% url 'add2' category.pk%}">{{category}}</a>
+              {% endfor%}
+            </div>
+        </div>
+
+</div>
+</div>
+
+<div class="col-5">
+  <div class="card" style="width:400px">
+    <div class="card-body">
+      <h4 class="card-title"> Create new category </h4>
+      <form method="POST">
+      {% csrf_token %}
+      {{addCategoryForm|crispy}}
+      <button class="btn btn-info" type="Submit" style="width:100px;">Add</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+{%endblock%}

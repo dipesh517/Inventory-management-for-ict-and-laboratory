@@ -1,0 +1,79 @@
+{% extends 'inventory/dashboard.html'%}
+{% load inventory_tags %}
+{%load crispy_forms_tags %}
+{%load staticfiles%}
+{%load static%}
+{%block content%}
+  <style>
+  .col1{
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+  }
+    .row1{
+      padding-top: 100px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+    }
+  </style>
+
+
+  <div class="row1">
+
+    {%if messages%}
+    {%for message in messages%}
+    <div class="alert alert-{{message.tags}}">
+      {{message}}
+    </div>
+    {%endfor%}
+    {%endif%}
+    <div class="col6">
+<div class="card" style="height:530px;width:600px;overflow-y:scroll;">
+  <div class="card-body">
+    <h5 class="card-title"> Add an existing item from the list </h5>
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search by name.." class="form-control" style="width:50%;height:35px;">
+    <ul class="list-group list-group-flush" id="myUL">
+      {% for item in itemObj%}
+      <li class="list-group-item"><a href="{% url 'addExisting' item.pk %}" style="text-decoration:none";><span style="color:black;font-weight:bold;">Name:</span> {{item.name}} |<span style="color:black;font-weight:bold;"> Model: </span> {{item.model}} |<span style="padding-left:10px;color:black;font-weight:bold;">Room: </span>{{item.room}}</a></li>
+        {% endfor%}
+      </ul>
+  </div>
+</div>
+</div>
+<div class="col6">
+<div class="card" style="width:800px;height:530px;overflow-y:scroll;">
+  <div class="card-body">
+    <h3 class="card-title"> Create new item </h3>
+    <form method="POST">
+    {% csrf_token %}
+    {{addItemform|crispy}}
+    <button class="btn btn-info" type="Submit">Add</button>
+    </form>
+  </div>
+</div>
+</div>
+</div>
+<script>
+function myFunction() {
+  // Declare variables
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('myInput');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myUL");
+  li = ul.getElementsByTagName('li');
+
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+</script>
+
+{%endblock%}

@@ -2,42 +2,36 @@ from django import template
 
 register = template.Library()
 
-from ..models import Computer
-from ..models import Laptop
-from ..models import NetworkSwitch
-from ..models import Printer
-from ..models import AdditionalItem
+from ..models import Item
 
 
-equipment = [Computer, Laptop, NetworkSwitch, Printer, AdditionalItem]
-
-
-@register.simple_tag
-def equipment1_name():
-    return equipment[0].__name__
-
-@register.simple_tag
-def equipment2_name():
-    return equipment[1].__name__
-
-@register.simple_tag
-def equipment3_name():
-    return equipment[2].__name__
-
-@register.simple_tag
-def equipment4_name():
-    return equipment[3].__name__
-
-@register.simple_tag
-def equipment5_name():
-    return equipment[4].__name__
+# @register.simple_tag
+# def equipment1_name():
+#     return equipment[0].__name__
+#
+# @register.simple_tag
+# def equipment2_name():
+#     return equipment[1].__name__
+#
+# @register.simple_tag
+# def equipment3_name():
+#     return equipment[2].__name__
+#
+# @register.simple_tag
+# def equipment4_name():
+#     return equipment[3].__name__
+#
+# @register.simple_tag
+# def equipment5_name():
+#     return equipment[4].__name__
 
 
 @register.simple_tag
 def total_products_count():
     count = 0
-    for equp in equipment:
-        count += equp.objects.all().count()
+    item = Item.objects.all()
+    for obj in item:
+        count += obj.working + obj.in_maintenance + obj.out_of_order
 
     return count
 
@@ -45,8 +39,9 @@ def total_products_count():
 @register.simple_tag
 def out_of_order_count():
     count = 0
-    for equp in equipment:
-        count += equp.objects.filter(status='OO').count()
+    item = Item.objects.all()
+    for obj in item:
+        count += obj.out_of_order
 
     return count
 
@@ -54,7 +49,8 @@ def out_of_order_count():
 @register.simple_tag
 def in_maintenance_count():
     count = 0
-    for equp in equipment:
-        count += equp.objects.filter(status='IM').count()
+    item = Item.objects.all()
+    for obj in item:
+        count += obj.in_maintenance
 
     return count

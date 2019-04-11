@@ -1,113 +1,71 @@
+{% load staticfiles %}
+{% load inventory_tags %}
 {% load static %}
+{%load crispy_forms_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<title>Login V14</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="{% static 'inventory/images/favicon.ico' %}"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'inventory/vendor/bootstrap/css/bootstrap.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'inventory/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'inventory/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'inventory/vendor/animate/animate.css' %}">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="{% static 'inventory/vendor/css-hamburgers/hamburgers.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'inventory/vendor/animsition/css/animsition.min.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'inventory/vendor/select2/select2.min.css' %}">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="{% static 'inventory/vendor/daterangepicker/daterangepicker.css' %}">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{% static 'inventory/css/util.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'inventory/css/main.css' %}">
-<!--===============================================================================================-->
+  <link rel="stylesheet" href="{% static 'inventory/vendor/bootstrap/css/bootstrap.min.css' %}" />
+
+  <style>
+  body{
+    margin:0;
+    padding: 0;
+    /* background: url('/static/inventory/images/download.jpeg') no-repeat;
+    background-size: cover; */
+    background: #34495e;
+  }
+  .card {
+    padding:30px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 40%;
+    border-radius: 50px;
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+
+  .container {
+    padding: 2px 16px;
+  }
+  .login-box{
+    position:absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  </style>
 </head>
 <body>
-	
-	<div class="limiter">
-		<div class="container-login100">
-			<div>
-			<div class="row">
-			<div class="col-2">
-			<img src="{% static 'inventory/images/tulogo.png' %}" style="width:100px;height:80px;margin-bottom:10px;">
-			</div>
-			<div class="col-10">
-			<h2 class="login_title">Lab Inventory Management</h2>
-			</div>
-			</div>
-			
-			<div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-				<form class="login100-form validate-form flex-sb flex-w">
-					<span class="login100-form-title p-b-32">
-						Account Login
-					</span>
 
-					<span class="txt1 p-b-11">
-						Username
-					</span>
-					<div class="wrap-input100 validate-input m-b-36" data-validate = "Username is required">
-						<input class="input100" type="text" name="username" >
-						<span class="focus-input100"></span>
-					</div>
-					
-					<span class="txt1 p-b-11">
-						Password
-					</span>
-					<div class="wrap-input100 validate-input m-b-12" data-validate = "Password is required">
-						<span class="btn-show-pass">
-							<i class="fa fa-eye"></i>
-						</span>
-						<input class="input100" type="password" name="pass" >
-						<span class="focus-input100"></span>
-					</div>
-					
-					<div class="flex-sb-m w-full p-b-48">
-						
+<div class="login-box">
+<div class="card" style="width:400px">
+<div class="container">
 
-						<div>
-							<a href="#" class="txt3">
-								Forgot Password?
-							</a>
-						</div>
-					</div>
-
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Login
-						</button>
-					</div>
-
-				</form>
-			</div>
-			</div>
-		</div>
-	</div>
-	
-
-	<div id="dropDownSelect1"></div>
-	
-<!--===============================================================================================-->
-	<script src="{% static 'inventory/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'inventory/vendor/animsition/js/animsition.min.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'inventory/vendor/bootstrap/js/popper.js' %}"></script>
-	<script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'inventory/vendor/select2/select2.min.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'inventory/vendor/daterangepicker/moment.min.js' %}"></script>
-	<script src="{% static 'inventory/vendor/daterangepicker/daterangepicker.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'inventory/vendor/countdowntime/countdowntime.js' %}"></script>
-<!--===============================================================================================-->
-	<script src="{% static 'inventory/js/main.js' %}"></script>
+<form method="POST">
+  {% csrf_token %}
+  <fieldset class="form-group">
+    <legend class="border-bottom mb-4">
+      Log In
+    </legend>
+    {{form|crispy}}
+  </fieldset>
+  <div class="form-group">
+    <button class="btn btn-outline-info" type="submit">login</button>
+  </div>
+</form>
+</div>
+</div>
+</div>
+       {%if messages%}
+      {%for message in messages%}
+      <div class="alert alert-{{message.tags}}">
+        {{message}}
+      </div>
+      {%endfor%}
+      {%endif%}
 
 </body>
 </html>
