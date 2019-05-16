@@ -10,7 +10,20 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def dashboardView(request):
-    return render(request, 'inventory/base.html')
+    categoryDetails = []
+    working_count = in_maintenanace_count = out_of_order_count = 0
+    categoryObj = Categorie.objects.order_by('id')
+    for cat in categoryObj:
+        itemObj = Item.objects.filter(category = cat)
+        for obj in itemObj:
+            working_count += obj.working if obj.working!=0 else 0
+            in_maintenanace_count += obj.in_maintenance if obj.in_maintenance!=0 else 0
+            out_of_order_count += obj.out_of_order if obj.out_of_order!=0 else 0
+        temp = [cat.category_name,working_count,out_of_order_count,in_maintenanace_count]
+        categoryDetails.append(temp)
+        working_count = in_maintenanace_count = out_of_order_count = 0
+    context = {'categoryDetails':categoryDetails}
+    return render(request, 'inventory/base.html',context)
 
 @login_required
 def register(request):
@@ -369,3 +382,9 @@ def search3(request, floorNumber, roomNumber):
     # {%for item in item0%} represents filterd item list of 1st category and so on upto count number of categories in template
     context.update(dict)
     return render(request, 'inventory/search3.html', context)
+
+def detailsView(request,key):
+    categoryObj = Categorie.objects.get(pk=key)
+    itemObj = Item.objects.filter(category = categoryObj)
+    context = {'itemObj':itemObj,'categoryObj':categoryObj}
+    return render(request,'inventory/details.html',context)

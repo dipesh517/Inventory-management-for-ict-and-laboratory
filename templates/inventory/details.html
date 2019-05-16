@@ -1,0 +1,126 @@
+{% extends 'inventory/dashboard.html'%}
+{% load inventory_tags %}
+{%load staticfiles%}
+{%load static%}
+{%block content%}
+{% block extra_js%}
+<script src="{% static 'inventory/js/tableCollapse.js' %}"></script>
+<script src="{% static 'inventory/js/tableSearch.js' %}"></script>
+<script src="{% static 'inventory/vendor/jquery/jquery-3.3.1.slim.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/ajax/libs/popper/1.14.6/umd/popper.min.js' %}"></script>
+<script src="{% static 'inventory/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+
+
+
+{% endblock extra_js %}
+  <style>
+    tr{
+      font-size:12px;
+      line-height: 20px;
+    }
+
+    .imghoverzoom:hover {
+      transform: scale(1.4);
+    }
+  </style>
+<div style="padding-top:100px;">
+    <h2 style="color:white;text-align:center;">{{categoryObj.category_name}}</h2>
+    <div style="padding:20px 0px 20px 250px;">
+<input type="text" id="myInput1" onkeyup="myFunction1()" placeholder="Search by name.." class="form-control" style="width:50%;height:35px;">
+    <div class="tab-content" style="width:950px;">
+
+        <div>
+
+          <table class="table table-bordered table-striped" id="dataTableAll" style="background:white;width:100%;" >
+          <thead class="thead-dark">
+           <tr>
+             <th scope="col">Name</th>
+             <th scope="col">Model</th>
+             <th scope="col">Working</th>
+             <th scope="col">Out Of Order</th>
+             <th scope="col">In Maintenance</th>
+             <th scope="col">Floor</th>
+             <th scope="col">Room</th>
+             <th scope="col">Cost per item</th>
+             <!-- <th scope="col">Edit</th>
+             <th scope="col">Delete</th> -->
+             {% if categoryObj.extra_fields%}
+             {% for key, value in categoryObj.extra_fields.items %}
+            <th scope="col"> {{ value }} </th>
+             {% endfor %}
+             {% endif %}
+           </tr>
+          </thead>
+          <tbody>
+
+           {% for item in itemObj%}
+           <tr>
+             <td>{{item.name}}</td>
+             <td>{{item.model}}</td>
+             <td>{{item.working}}</td>
+             <td>{{item.out_of_order}}</td>
+             <td>{{item.in_maintenance}}</td>
+             <td>{{item.room.floor}}</td>
+             <td>{{item.room}}</td>
+             <td>{{item.cost_per_item}}</td>
+             <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+             <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+             {% if item.extra_value%}
+             {% for key, value in item.extra_value.items %}
+            <td> {{value}} </td>
+             {% endfor %}
+             {% endif %}
+  <td>
+    <div class="dropdown show">
+      <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+      </a>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+  <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+  <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+  <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+  </div>
+  </div>
+    </td>
+ </tr>
+
+ {% endfor %}
+
+          </tbody>
+          </table>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+</div>
+
+<script>
+
+
+function myFunction1() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput1");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("dataTableAll");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+{% endblock content %}

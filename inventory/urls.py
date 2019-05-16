@@ -21,6 +21,7 @@ urlpatterns = [
     path('editcategory/<int:key>',views.editcategory2,name='editcategory2'),
     path('createroom/',views.createroom,name='createroom'),
     path('createfloor/',views.createfloor,name='createfloor'),
+    path('details/<int:key>',views.detailsView,name='details'),
 
 
 ]

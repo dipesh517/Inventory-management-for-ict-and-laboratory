@@ -10,13 +10,16 @@
     flex-direction: column;
     justify-content:space-around;
   }
+  .col3{
+    padding:20px 0px 20px 0px;
+  }
     .row1{
       display: flex;
       flex-direction: row;
       justify-content: space-around;
     }
     .row2{
-      display: block;
+      /* display: block; */
       text-align: center;
     }
     .row3{
@@ -24,6 +27,26 @@
       left:50%;
 
     }
+    .info {
+      color:white;
+    }
+    #grid {
+  display: grid;
+  /* grid-template-rows: repeat(9, 1fr); */
+  grid-template-columns: repeat(8, 1fr);
+  grid-gap: 30px;
+  }
+  #grid > div {
+    background-color: #5bc0de;
+    color: white;
+    font-size: 1vw;
+    padding: 10px;
+    border-radius:8px;
+
+  }
+  .hello{
+    padding:0px 30px 0px 30px;
+  }
   </style>
 
   <div class="col1">
@@ -31,12 +54,22 @@
       <h1 class="text-white" style="font-weight:bold;font-size:40px;">Inventory Management for ICTC and Department</h1>
       <h2 class="text-white"> Pulchowk Campus, Lalitpur </h2>
     </div>
+    <!-- <br />
     <br />
     <br />
-    <br />
-    <br />
-  <div class="row1">
-  <a href="{% url 'search' 999 999%}" style="text-decoration:none;"><div class="card hoverZoom bg-info text-white" style="width:270px;height:150px;">
+    <br /> -->
+    </div>
+    <div class="col3">
+      <p class="hoverZoom">
+      <a href="{%url 'add1' %}" style="color:rgb(80,177,92);font-weight:bold">
+        <img class="row3" src="{% static 'inventory/images/plus.png' %}" style="width:60px;height:60px;">
+      <!-- <h1 style="font-family:Helvetica Neue;font-size:20px;color:rgb(80,177,92);font-weight:bold;">Add an item</h1> -->
+      </a>
+      </p>
+    </div>
+  <span class="row1">
+  <!-- <a href="{% url 'search' 999 999%}" style="text-decoration:none;">
+    <div class="card hoverZoom bg-info text-white" style="width:270px;height:150px;">
   <div class="card-body">
     <h4 class="card-title">Total Items</h4>
     <p class="card-text">{%total_products_count%}</p>
@@ -60,20 +93,28 @@
 
 </div>
 </div>
+</a> -->
+
+
+<div id="grid">
+{% for name,working,out,maintenance in categoryDetails%}
+
+<div class="hoverZoom">
+  <a href="{% url 'details' forloop.counter %}" style="text-decoration:none;">
+<h7 style="color:#35495E"><b>{{name}}</b></h7>
+<p class="info">Working: {{working}}</p>
+<p class="info">Out Of Order: {{out}}</p>
+<p class="info">In Maintenance: {{maintenance}}</p>
 </a>
 </div>
-<br />
-<br />
-<br />
 
-<p class="hoverZoom">
-<a href="{%url 'add1' %}" style="color:rgb(80,177,92);font-weight:bold">
-  <img class="row3" src="{% static 'inventory/images/plus.png' %}" style="width:40px;height:40px;margin-left:0%;">
-<h1 style="font-family:Helvetica Neue;font-size:20px;color:rgb(80,177,92);font-weight:bold;text-align:center;padding-left:45px;">Add an item</h1>
-</a>
-</p>
+{% endfor%}
+</div>
 
-  </div>
+  </span>
+  <br>
+  <br>
+
   {%if messages%}
   {%for message in messages%}
   <div class="alert alert-{{message.tags}}">

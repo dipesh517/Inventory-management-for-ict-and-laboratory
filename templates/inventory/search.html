@@ -63,14 +63,13 @@
     </div>
 
   </div>
-
   <div class="col-2" style="overflow-y:scroll;margin-left:-50px;">
     <h5 style="color:white;">Category</h5>
 
       <div class="list-group" id="myList" role="tabList" style="font-size:12px;">
 
       {% for category in categories%}
-        <a class="list-group-item list-group-item-action link" data-toggle="list" role="tab" href="{% cycle '#tab1' '#tab2' '#tab3' '#tab4' '#tab5' '#tab6' '#tab7' '#tab8' '#tab9' '#tab10' %}">{{category}}</a>
+        <a class="list-group-item list-group-item-action link" data-toggle="list" role="tab" href="{% cycle '#tab1' '#tab2' '#tab3' '#tab4' '#tab5' '#tab6' '#tab7' '#tab8' '#tab9' '#tab10' '#tab11' '#tab12' '#tab13' '#tab14' '#tab15' '#tab16' '#tab17' '#tab18' '#tab19' '#tab20' '#tab21' '#tab22' %}">{{category}}</a>
       {% endfor%}
       </div>
 
@@ -81,7 +80,7 @@
 <input type="text" id="myInput1" onkeyup="myFunction1()" placeholder="Search by name.." class="form-control" style="width:50%;height:35px;">
     <div class="tab-content" style="width:950px;">
       {% for category in categories%}
-        <div class="tab-pane" id="{% cycle 'tab1' 'tab2' 'tab3' 'tab4' 'tab5' 'tab6' 'tab7' 'tab8' 'tab9' 'tab10' %}" role="tabpanel">
+        <div class="tab-pane" id="{% cycle 'tab1' 'tab2' 'tab3' 'tab4' 'tab5' 'tab6' 'tab7' 'tab8' 'tab9' 'tab10' 'tab11' 'tab12' 'tab13' 'tab14' 'tab15' 'tab16' 'tab17' 'tab18' 'tab19' 'tab20' 'tab21' 'tab21' 'tab22'%}" role="tabpanel">
 
           <table class="table table-bordered table-striped" id="dataTableAll" style="background:white;width:100%;" >
           <thead class="thead-dark">
@@ -118,7 +117,6 @@
              {% if item.extra_value%}
              {% for key, value in item.extra_value.items %}
             <td> {{value}} </td>
-
              {% endfor %}
              {% endif %}
              <td>
@@ -465,6 +463,74 @@
 
  {% endfor %}
  {% endif %}
+
+ {% if forloop.counter0 == 11 %}
+ {% for item in item11%}
+ <tr>
+  <td>{{item.name}}</td>
+  <td>{{item.model}}</td>
+  <td>{{item.working}}</td>
+  <td>{{item.out_of_order}}</td>
+  <td>{{item.in_maintenance}}</td>
+  <td>{{item.room}}</td>
+  <td>{{item.cost_per_item}}</td>
+  <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+  <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+  {% if item.extra_value%}
+  {% for key, value in item.extra_value.items %}
+ <td> {{value}} </td>
+  {% endfor %}
+  {% endif %}
+  <td>
+    <div class="dropdown show">
+      <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+      </a>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+  <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+  <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+  <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+  </div>
+  </div>
+    </td>
+ </tr>
+
+ {% endfor %}
+ {% endif %}
+
+ {% if forloop.counter0 == 12 %}
+ {% for item in item12%}
+ <tr>
+  <td>{{item.name}}</td>
+  <td>{{item.model}}</td>
+  <td>{{item.working}}</td>
+  <td>{{item.out_of_order}}</td>
+  <td>{{item.in_maintenance}}</td>
+  <td>{{item.room}}</td>
+  <td>{{item.cost_per_item}}</td>
+  <!-- <td> <a href="#"><img src = "{% static 'inventory/images/edit.svg' %}" style="width:20px;height:20px;">	</a></td>
+  <td><a href="#"><img src = "{% static 'inventory/images/delete.svg' %}" style="width:20px;height:20px;">	</a></td> -->
+  {% if item.extra_value%}
+  {% for key, value in item.extra_value.items %}
+ <td> {{value}} </td>
+  {% endfor %}
+  {% endif %}
+  <td>
+    <div class="dropdown show">
+      <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img src = "{% static 'inventory/images/3dot.png' %}" class="imghoverzoom">
+      </a>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+  <a class="dropdown-item padd" href="{% url 'edit' item.pk %}">Edit</a>
+  <a class="dropdown-item padd" href="{% url 'delete' item.pk %}">Delete</a>
+  <a class="dropdown-item padd" href="{% url 'allocate' item.pk %}">Reallocate</a>
+  </div>
+  </div>
+    </td>
+ </tr>
+
+ {% endfor %}
+ {% endif %}
           </tbody>
           </table>
 
@@ -483,7 +549,6 @@ $('#myList a[href="#tab1"]').tab('show')
 $('#myList a').on('click', function (e) {
   e.preventDefault()
   $(this).tab('show')
-
 })
 function myFunction1() {
   // Declare variables
@@ -519,6 +584,42 @@ function myFunction1() {
   }
   else if ($("#tab10").is(":visible")){
     table = document.getElementById("tab10");
+  }
+  else if ($("#tab11").is(":visible")){
+    table = document.getElementById("tab10");
+  }
+  else if ($("#tab12").is(":visible")){
+    table = document.getElementById("tab11");
+  }
+  else if ($("#tab13").is(":visible")){
+    table = document.getElementById("tab12");
+  }
+  else if ($("#tab14").is(":visible")){
+    table = document.getElementById("tab13");
+  }
+  else if ($("#tab15").is(":visible")){
+    table = document.getElementById("tab14");
+  }
+  else if ($("#tab16").is(":visible")){
+    table = document.getElementById("tab15");
+  }
+  else if ($("#tab17").is(":visible")){
+    table = document.getElementById("tab16");
+  }
+  else if ($("#tab18").is(":visible")){
+    table = document.getElementById("tab17");
+  }
+  else if ($("#tab19").is(":visible")){
+    table = document.getElementById("tab18");
+  }
+  else if ($("#tab20").is(":visible")){
+    table = document.getElementById("tab19");
+  }
+  else if ($("#tab21").is(":visible")){
+    table = document.getElementById("tab20");
+  }
+  else if ($("#tab22").is(":visible")){
+    table = document.getElementById("tab21");
   }
 
   tr = table.getElementsByTagName("tr");
